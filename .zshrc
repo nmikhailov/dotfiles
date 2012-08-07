@@ -5,9 +5,9 @@ plugins=(archlinux git sprunge tmux vim python)
 
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/java/bin:/opt/java/db/bin:/opt/java/jre/bin:/usr/bin/core_perl
-PATH=~/.gem/ruby/1.9.1/bin/:~/.bin/:$PATH
+PATH=~/.gem/ruby/1.9.1/bin/:~/.bin/:~/scripts/:$PATH
 export EDITOR='vim'
-export TERM='xterm-256color'
+export TERM='screen-256color'
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 
 alias cd..='cd ..'
@@ -35,3 +35,11 @@ fi
 
 #bindkey '^i' vi-cmd-mode
 #bindkey -M viins 'ESC' vi-cmd-mode
+
+orphans() {
+    if [[ ! -n $(pacman -Qdt) ]]; then
+        echo no orphans to remove
+    else
+        sudo pacman -Rs $(pacman -Qdtq)
+    fi
+}
