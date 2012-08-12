@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# Init numlock
-kbrd=`lsusb | grep -i "keyboard" | wc -l`
-
-if [[ $kbrd -ge 1 ]]; then
-    numlockx on
-else
-    numlockx off
-fi
-
-
 # Start DE/WM
 DEFAULT_SESSION=xfce
 case $1 in
