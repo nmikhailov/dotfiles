@@ -1,7 +1,7 @@
+plugins=(archlinux git sprunge tmux vim python yaourt)
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="wezm"
 source $ZSH/oh-my-zsh.sh
-plugins=(archlinux git sprunge tmux vim python)
 
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/java/bin:/opt/java/db/bin:/opt/java/jre/bin:/usr/bin/core_perl
