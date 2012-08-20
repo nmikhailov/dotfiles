@@ -27,11 +27,11 @@ bindkey "\e[6~" end-of-history # PageDown
 #PROMPT="%{$fg[$ucolor]%}%n%{$reset_color%}%{$reset_color%}:%{$fg[green]%}%0~%{$fg[red]%}%(?.. [%?]) %{$reset_color%}%% "
 
 # TMUX auto start
-if which tmux 2>&1 >/dev/null; then
+#if which tmux 2>&1 >/dev/null; then
     #if not inside a tmux session, and if no session is started, start a new session
-    test -z "$TMUX" && (tmux attach || tmux new-session)
+#    test -z "$TMUX" && (tmux attach || tmux new-session)
 #    test -z "$TMUX" || tmux new-session
-fi
+#fi
 
 #bindkey '^i' vi-cmd-mode
 #bindkey -M viins 'ESC' vi-cmd-mode
