@@ -1,0 +1,390 @@
+//package TFC_Core.GUI;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.TreeSet;
+
+import org.lwjgl.opengl.GL11;
+
+import TFC_Core.TileEntityTerraAnvil;
+import TFC_Core.Containers.ContainerTerraAnvil;
+import TFC_Core.GUI.GuiContainerTFC;
+import TFC_Core.General.AnvilCraftingManagerTFC;
+import TFC_Core.General.AnvilRecipe;
+import TFC_Core.General.CraftingRule;
+
+public class GuiTerraAnvil extends GuiContainerTFC {
+	private TileEntityTerraAnvil AnvilEntity;
+	public GuiTerraAnvil(aak inventoryplayer,
+			TileEntityTerraAnvil tileentityanvil) {
+		super(new ContainerTerraAnvil(inventoryplayer, tileentityanvil));
+		this.AnvilEntity = tileentityanvil;
+	}
+
+	public void c() {
+		super.c();
+		this.guiLeft = ((this.q - 208) / 2);
+		this.guiTop = ((this.r - 198) / 2);
+
+		this.s.clear();
+
+		this.s.add(new abp(0, this.guiLeft + 5, this.guiTop + 5, 66, 20,
+				"§4Light H"));
+		this.s.add(new abp(1, this.guiLeft + 5, this.guiTop + 24, 66, 20,
+				"§4Heavy Hit"));
+		this.s.add(new abp(2, this.guiLeft + 5, this.guiTop + 43, 66, 20,
+				"§4Draw"));
+		this.s.add(new abp(3, this.guiLeft + 5, this.guiTop + 62, 66, 20,
+				"§4Quench"));
+
+		this.s.add(new abp(4, this.guiLeft + 137, this.guiTop + 5, 66, 20,
+				"§2Punch"));
+		this.s.add(new abp(5, this.guiLeft + 137, this.guiTop + 24, 66, 20,
+				"§2Bend"));
+		this.s.add(new abp(6, this.guiLeft + 137, this.guiTop + 43, 66, 20,
+				"§2Upset"));
+		this.s.add(new abp(7, this.guiLeft + 137, this.guiTop + 62, 66, 20,
+				"§2Shrink"));
+
+		this.s.add(new abp(8, this.guiLeft + 86, this.guiTop + 74, 36, 20,
+				"§4Weld"));
+
+		this.s.add(new abp(9, this.guiLeft + 122, this.guiTop + 5, 15, 20, "S"));
+	}
+
+	static int[] vals = { -3, -9, -15, -49, 2, 7, 13, 16 };
+	static HashMap<Integer, Integer> vals2index = new HashMap<Integer, Integer>();
+	static {
+		for (int i = 0; i < vals.length; i++) {
+			vals2index.put(vals[i], i);
+		}
+		// precalc();
+	}
+
+	protected void a(abp guibutton) {
+		if (guibutton.f == 0) {
+			this.AnvilEntity.actionLightHammer();
+		} else if (guibutton.f == 1) {
+			this.AnvilEntity.actionHeavyHammer();
+		} else if (guibutton.f == 2) {
+			this.AnvilEntity.actionDraw();
+		} else if (guibutton.f == 3) {
+			this.AnvilEntity.actionQuench();
+		} else if (guibutton.f == 4) {
+			this.AnvilEntity.actionPunch();
+		} else if (guibutton.f == 5) {
+			this.AnvilEntity.actionBend();
+		} else if (guibutton.f == 6) {
+			this.AnvilEntity.actionUpset();
+		} else if (guibutton.f == 7) {
+			this.AnvilEntity.actionShrink();
+		} else if (guibutton.f == 8) {
+			this.AnvilEntity.actionWeld();
+		} else if (guibutton.f == 9) {
+			getSolution();
+
+			System.out.println();
+			int[] in = AnvilEntity.getItemRules();
+			for (int i = 0; i < in.length; i++) {
+				System.out.print(in[i] + " ");
+			}
+			System.out.println();
+		}
+		this.inventorySlots.a();
+	}
+
+	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
+		int r = this.p.p.b("/bioxx/anvilgui.png");
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
+		this.p.p.b(r);
+		int w = (this.q - 208) / 2;
+		int h = (this.r - 198) / 2;
+		b(w, h, 0, 0, 208, 198);
+
+		int i1 = this.AnvilEntity.getCraftingValue();
+
+		b(w + 73 + i1, h + 103, 219, 9, 11, 6);
+
+		i1 = this.AnvilEntity.getItemCraftingValue();
+		b(w + 76 + i1, h + 108, 208, 10, 5, 6);
+
+		drawRules(w, h);
+	}
+
+	public void drawRules(int w, int h) {
+		this.u.b("Rules:", w + 209, h + 30 - 8, 4210752);
+		if (this.AnvilEntity.workRecipe != null) {
+			CraftingRule[] Rules = this.AnvilEntity.workRecipe.getRules();
+			int[] ItemRules = this.AnvilEntity.getItemRules();
+			for (int i = 0; i < 3; i++) {
+				int yOffset = 8 * i;
+				String s = "•";
+
+				if (i == 0) {
+					if (Rules[0].matches(ItemRules, 0))
+						s = s + "§2";
+					else {
+						s = s + "§4";
+					}
+					s = s + Rules[0].Name;
+				} else if (i == 1) {
+					if (Rules[1].matches(ItemRules, 1))
+						s = s + "§2";
+					else {
+						s = s + "§4";
+					}
+					s = s + Rules[1].Name;
+				} else if (i == 2) {
+					if (Rules[2].matches(ItemRules, 2))
+						s = s + "§2";
+					else {
+						s = s + "§4";
+					}
+					s = s + Rules[2].Name;
+				}
+				this.u.b(s, w + 209, h + 30 + yOffset, 4210752);
+			}
+		}
+
+		if (timeout > 0) {
+			timeout--;
+		} else {
+			if (!queue.isEmpty()) {
+				int cur = queue.get(0);
+				queue.remove(0);
+
+				a(((abp) this.s.get(cur)));
+				System.out.println(cur);
+
+				timeout = 14;
+                timeout = 1;
+			} else {
+				((abp) this.s.get(9)).h = true;
+			}
+		}
+	}
+
+	public boolean checkRules(int[] ItemRules) {
+		if (this.AnvilEntity.workRecipe != null) {
+			CraftingRule[] Rules = this.AnvilEntity.workRecipe.getRules();
+			// int[] ItemRules = this.AnvilEntity.getItemRules();
+			for (int i = 0; i < 3; i++) {
+				if (i == 0) {
+					if (!Rules[0].matches(ItemRules, 0))
+						return false;
+				} else if (i == 1) {
+					if (!Rules[1].matches(ItemRules, 1))
+						return false;
+				} else if (i == 2) {
+					if (!Rules[2].matches(ItemRules, 2))
+						return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	private int timeout = 0;
+	private ArrayList<Integer> queue = new ArrayList<Integer>();
+
+	protected void drawGuiContainerForegroundLayer() {
+		// ((abp)this.s.get(3)).h = false;
+	}
+
+	private boolean getIsMouseOverSlot(yu slot, int i, int j) {
+		int k = this.guiLeft;
+		int l = this.guiTop;
+		i -= k;
+		j -= l;
+		return (i >= slot.d - 1) && (i < slot.d + 16 + 1) && (j >= slot.e - 1)
+				&& (j < slot.e + 16 + 1);
+	}
+
+	public void a(nl fontrenderer, String s, int i, int j, int k) {
+		fontrenderer.b(s, i - fontrenderer.a(s) / 2, j, k);
+	}
+
+	public static class Rec {
+		public Rec(int pos) {
+			this.pos = pos;
+			last = new int[] { -1, -1, -1 };
+		}
+
+		public Rec(int pos, int a, int b, int c) {
+			this.pos = pos;
+			last = new int[] { a, b, c };
+		}
+
+		public Rec(int from, int[] itemRules) {
+			this.pos = from;
+			last = Arrays.copyOf(itemRules, itemRules.length);
+		}
+
+		public Rec proc(int type) {
+			int[] vals = { -3, -9, -15, -49, 2, 7, 13, 16 };
+			int nv = pos + vals[type];
+			if (nv < -50 || nv > 100)
+				return null;
+			Rec res = new Rec(nv);
+			res.last[0] = type > 0 ? type - 1 : type;
+			res.last[1] = last[0];
+			res.last[2] = last[1];
+			return res;
+		}
+
+		public int getPos() {
+			return pos;
+		}
+
+		public int[] getLast() {
+			return last;
+		}
+
+		@Override
+		public int hashCode() {
+			int hash = (pos + 50);
+			hash = (hash << 8) ^ (last[0] + 1);
+			hash = (hash << 2) ^ (last[1] + 1);
+			hash = (hash << 2) ^ (last[2] + 1);
+			return hash;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (obj instanceof Rec) {
+				Rec x = (Rec) obj;
+				if (x.pos == pos && x.last[0] == last[0]
+						&& x.last[1] == last[1] && x.last[2] == last[2]) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		@Override
+		public String toString() {
+			String res = "Rec pos: " + pos + ", ";
+			res += "[" + last[0] + ", " + last[1] + ", " + last[2] + "]";
+			return res;
+		}
+
+		private int pos;
+		private int[] last;
+	}
+
+	static HashMap<Rec, Rec> calc_state(Rec start, int end, boolean isAccurate) {
+		HashMap<Rec, Rec> path = new HashMap<GuiTerraAnvil.Rec, GuiTerraAnvil.Rec>();
+		Queue<Rec> q = new LinkedList<Rec>();
+		path.put(start, start);
+		q.add(start);
+
+		while (!q.isEmpty()) {
+			Rec cur = q.poll();
+
+			for (int i = 0; i < vals.length; i++) {
+				Rec nv = cur.proc(i);
+
+				if (nv != null && !path.containsKey(nv)) {
+					if (false && isAccurate) {
+						int diff = end - nv.getPos();
+						if (diff != 0 && diff >= -5 && diff <= 4)
+							continue;
+					}
+					path.put(nv, cur);
+					q.add(nv);
+				}
+			}
+		}
+		return path;
+	}
+
+	boolean isDamageble() {
+		AnvilCraftingManagerTFC mng = AnvilCraftingManagerTFC.getInstance();
+		AnvilRecipe localAnvilRecipe = new AnvilRecipe(
+				this.AnvilEntity.anvilItemStacks[1],
+				this.AnvilEntity.anvilItemStacks[5],
+				this.AnvilEntity.workRecipe.getCraftingValue(),
+				CraftingRule.ANY, CraftingRule.ANY, CraftingRule.ANY,
+				this.AnvilEntity.anvilItemStacks[7] != null,
+				this.AnvilEntity.AnvilTier, null);
+		aan localaan = null;
+		int ma = -1, mb = 10;
+		for (int i1 = ma; i1 <= mb; i1++) {
+			if (localaan != null)
+				break;
+			for (int i2 = ma; i2 <= mb; i2++) {
+				if (localaan != null)
+					break;
+				for (int i3 = ma; i3 <= mb; i3++) {
+					if (localaan != null)
+						break;
+					localaan = mng.findCompleteRecipe(localAnvilRecipe,
+							new int[] { i1, i2, i3 });
+				}
+			}
+		}
+		if (localaan == null) {
+			System.out.println("Fail");
+			return false;
+		}
+		return (localaan.a().h() > 0) && (!localaan.a().g());
+	}
+
+	void getSolution() {
+		Rec best = null;
+		ArrayList<Integer> b_path = null;
+		try {
+			int from = AnvilEntity.getItemCraftingValue(), to = AnvilEntity
+					.getCraftingValue();
+			Rec start = new Rec(from, AnvilEntity.getItemRules());
+			System.out.println("getSolution " + start);
+
+			boolean isAccurate = isDamageble();
+			System.out.println(isAccurate);
+			HashMap<Rec, Rec> path = calc_state(start, to, isAccurate);
+
+			// Grab passed
+
+			for (Rec r : path.keySet()) {
+				int diff = to - r.getPos();
+				boolean p1 = (diff == 0);
+				if (!isAccurate) {
+					p1 = diff >= -5 && diff <= 4;
+				}
+				if (p1 && checkRules(r.getLast())) {
+					ArrayList<Integer> c_path = new ArrayList<Integer>();
+					Rec cur = r, prev;
+					while (!cur.equals(start)) {
+						prev = path.get(cur);
+						c_path.add(vals2index.get(cur.getPos() - prev.getPos()));
+						cur = prev;
+					}
+					if (best == null || b_path.size() > c_path.size()) {
+						best = cur;
+						b_path = c_path;
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("exc");
+		}
+
+		// Minimal
+		if (best != null) {
+			Collections.reverse(b_path);
+			((abp) this.s.get(9)).h = false;
+			queue.addAll(b_path);
+		} else {
+			System.out.println("Cant find solution");
+		}
+	}
+
+	static public void main(String[] args) {
+		calc_state(new Rec(0), 15, true);
+	}
+}

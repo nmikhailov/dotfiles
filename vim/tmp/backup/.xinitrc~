@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#setxkbmap -layout us,ru -variant ,winkeys -option grp:caps_toggle,grp_led:scroll,terminate:ctrl_alt_bkspp
+#numlockx on
+exec dbus-launch --exit-with-session startxfce4
+#exec xmonad
+#xsetroot -cursor_name left_ptr

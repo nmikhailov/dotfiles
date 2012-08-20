@@ -1,0 +1,40 @@
+#!/usr/bin/python2
+import codecs
+
+start_offset = int('004FA3EC', 16)
+qtable = open('dump_qtable', 'r').read().split()
+q = open('dump_questions', 'r').read().split()
+answers = open('dump_ans_trim', 'r').read().split()
+
+
+def isAnswer(qid, aid):
+    bitmask = int(answers[qid * 0x8 * 0x9], 16)
+    return (bitmask & (1 << aid)) > 0
+
+
+def conv(x):
+    return codecs.encode(codecs.decode((chr(int(x, 16))), 'cp1251'), 'utf');
+
+
+def get_ans_str(pos):
+    len = q[pos:].index('00')
+    return reduce(lambda a, b: a + b, map(conv, q[pos:pos + len]))
+
+
+def get_qpointer(pos):
+    return int(reduce(lambda a, b: b + a, qtable[pos:pos + 4]), 16) - start_offset
+
+
+def gen_questions():
+    for qid in xrange(1, 71):
+        pointer = get_qpointer(qid * 0x48 - 0x48)
+        print qid, get_ans_str(pointer)
+
+        for aid in xrange(1, 32):
+            pointer = get_qpointer(qid * 0x48 - 0x48 + aid * 4)
+            if pointer < 0:
+                break
+            print "  -", get_ans_str(pointer), ('', '[+]')[isAnswer(qid, aid)]
+
+if __name__ == '__main__':
+    gen_questions()

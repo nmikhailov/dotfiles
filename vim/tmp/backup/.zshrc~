@@ -1,0 +1,43 @@
+# Check /etc/zsh/zshrc for system defaults.
+
+autoload omz
+
+plugins=(archlinux git sprunge tmux vim python)
+
+zstyle :omz:style theme default
+zstyle ':omz:plugins:*' autostart on
+# Comment out the following line if you wish for every z shell.
+zstyle :omz:plugins:tmux autostart off
+# cmd, t irc will launch irssi inside a tmux session named irc.
+# dir, t code will launch a shell inside of tmux in $HOME/code.
+zstyle :omz:plugins:tmux:cmd irc irssi
+zstyle :omz:plugins:tmux:dir code $HOME/code
+
+# Initiate all omz awesomeness!
+omz init
+# All *.zsh in .omz are sourced too, example you can put your
+#  custom aliases in that file.
+
+# vim: ft=zsh
+
+export EDITOR='vim'
+export TERM='xterm-256color'
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+
+alias cd..='cd ..'
+alias xclip='xclip -selection clipboard'
+alias git-diff='git diff --color'
+
+unsetopt correctall
+zstyle ':completion:*:processes' command 'ps xua'
+zstyle ':completion:*:processes' sort true
+zstyle ':completion:*:processes-names' command 'ps xho command'
+
+bindkey "\e[5~" beginning-of-history # PageUp
+bindkey "\e[6~" end-of-history # PageDown
+
+#PROMPT="$FG[248]%T $FX[bold]$FG[110]%n@%m$FX[reset] $FG[248]%. $FX[bold]$FG[111]\$$FX[reset] "
+PROMPT="%{$fg[$ucolor]%}%n%{$reset_color%}%{$reset_color%}:%{$fg[green]%}%0~%{$fg[red]%}%(?.. [%?]) %{$reset_color%}%% "
+
+#clear && archey
+PATH=~/.gem/ruby/1.9.1/bin/:$PATH

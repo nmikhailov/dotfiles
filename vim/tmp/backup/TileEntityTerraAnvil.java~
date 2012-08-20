@@ -1,0 +1,679 @@
+//package TFC_Core;
+
+import TFC_Core.General.AnvilCraftingManagerTFC;
+import TFC_Core.General.AnvilRecipe;
+import TFC_Core.General.AnvilReq;
+import TFC_Core.General.CraftingRule;
+import TFC_Core.General.HeatIndex;
+import TFC_Core.General.HeatManager;
+import TFC_Core.General.PacketHandler;
+import TFC_Core.General.TFCHeat;
+import TFC_Core.Items.ItemTerraMeltedMetal;
+/*import aan;
+#import ady;
+import fq;
+import io;*/
+import java.util.Random;
+/*import kw;
+import mod_TFC_Core;
+import no;
+import xd;
+import yr;
+import yw;*/
+
+public class TileEntityTerraAnvil extends kw
+  implements io
+{
+  public aan[] anvilItemStacks;
+  public int itemCraftingValue;
+  public int[] itemCraftingRules;
+  public int craftingValue;
+  public int craftingRange;
+  public int craftingReq;
+  public int[] craftingRules;
+  private aan result;
+  private boolean isDone = false;
+  private int workedRecently = 0;
+
+  private final int lagFixDelay = 5;
+  public AnvilRecipe workRecipe;
+  private AnvilRecipe workWeldRecipe;
+  public int AnvilTier;
+
+  public TileEntityTerraAnvil()
+  {
+    this.anvilItemStacks = new aan[8];
+    this.itemCraftingValue = 0;
+    this.itemCraftingRules = new int[] { -1, -1, -1 };
+    this.craftingValue = 0;
+    this.craftingRules = new int[] { -1, -1, -1 };
+
+    this.AnvilTier = AnvilReq.STONE.Tier;
+  }
+
+  public void n_()
+  {
+    if (this.anvilItemStacks[1] == null)
+    {
+      this.workRecipe = null;
+      this.craftingValue = 0;
+    }
+    else if ((this.anvilItemStacks[1] != null) && (this.workRecipe == null))
+    {
+      AnvilRecipe recipe = AnvilCraftingManagerTFC.getInstance().findMatchingRecipe(new AnvilRecipe(this.anvilItemStacks[1], this.anvilItemStacks[5], this.anvilItemStacks[7] != null, this.AnvilTier));
+
+      if (recipe != null)
+      {
+        this.workRecipe = recipe;
+      }
+
+    }
+
+    if (!this.i.F)
+    {
+      if ((getItemCraftingValue() < -50) || (getItemCraftingValue() > 100)) {
+        this.anvilItemStacks[1] = null;
+      }
+      if (this.workedRecently > 0) {
+        this.workedRecently -= 1;
+      }
+      TFCHeat.HandleContainerHeat(this.i, this.anvilItemStacks, this.j, this.k, this.l);
+
+      if ((this.workRecipe != null) && (getItemCraftingValue() != this.itemCraftingValue))
+      {
+        this.itemCraftingValue = getItemCraftingValue();
+
+        AnvilCraftingManagerTFC manager = AnvilCraftingManagerTFC.getInstance();
+        Random R = new Random(this.i.v());
+        AnvilRecipe recipe = null;
+        aan result = null;
+        int offset = 0;
+
+        for (int i = this.workRecipe.getCraftingValue() - 5; i < this.workRecipe.getCraftingValue() + 5; i++)
+        {
+          if (this.itemCraftingValue != i)
+            continue;
+          offset = i - this.workRecipe.getCraftingValue();
+          if (offset < 0)
+            offset += -2 * offset;
+          recipe = new AnvilRecipe(this.anvilItemStacks[1], this.anvilItemStacks[5], this.workRecipe.getCraftingValue(), CraftingRule.ANY, CraftingRule.ANY, CraftingRule.ANY, this.anvilItemStacks[7] != null, this.AnvilTier, null);
+
+          result = manager.findCompleteRecipe(recipe, getItemRules());
+          if (result != null)
+          {
+            break;
+          }
+        }
+        if (result != null)
+        {
+          ady Tag = new ady();
+          Tag.a("temperature", TFCHeat.GetTemperature(this.anvilItemStacks[1]));
+          this.anvilItemStacks[1] = result;
+          this.anvilItemStacks[1].d(Tag);
+          float pct = offset * 5;
+          if ((this.anvilItemStacks[1].a().h() > 0) && (!this.anvilItemStacks[1].a().g())) {
+            this.anvilItemStacks[1].b((int)pct);
+          }
+        }
+      }
+    }
+    if ((this.anvilItemStacks[1] != null) && (this.anvilItemStacks[1].a < 1))
+    {
+      this.anvilItemStacks[1].a = 1;
+    }
+  }
+
+  public int getCraftingValue()
+  {
+    if (!this.i.F)
+    {
+      return this.workRecipe != null ? this.workRecipe.getCraftingValue() : 0;
+    }
+
+    return this.craftingValue;
+  }
+
+  public void updateRules(int rule, int slot)
+  {
+    if (this.anvilItemStacks[slot].n())
+    {
+      ady Tag = this.anvilItemStacks[slot].o();
+      int rule1 = -1;
+      int rule2 = -1;
+      int rule3 = -1;
+      if (Tag.c("itemCraftingRule1")) {
+        rule1 = Tag.d("itemCraftingRule1");
+      }
+      if (Tag.c("itemCraftingRule2")) {
+        rule2 = Tag.d("itemCraftingRule2");
+      }
+      if (Tag.c("itemCraftingRule3")) {
+        rule3 = Tag.d("itemCraftingRule3");
+      }
+
+      this.itemCraftingRules[2] = rule2;
+      this.itemCraftingRules[1] = rule1;
+      this.itemCraftingRules[0] = rule;
+
+      Tag.a("itemCraftingRule1", (byte)this.itemCraftingRules[0]);
+      Tag.a("itemCraftingRule2", (byte)this.itemCraftingRules[1]);
+      Tag.a("itemCraftingRule3", (byte)this.itemCraftingRules[2]);
+
+      this.anvilItemStacks[slot].d(Tag);
+    }
+  }
+
+  public int[] getItemRules()
+  {
+    int[] rules = new int[3];
+    if ((this.anvilItemStacks[1] != null) && (this.anvilItemStacks[1].n()))
+    {
+      if (this.anvilItemStacks[1].d.c("itemCraftingRule1"))
+        rules[0] = this.anvilItemStacks[1].d.d("itemCraftingRule1");
+      else {
+        rules[0] = CraftingRule.ANY.Action;
+      }
+      if (this.anvilItemStacks[1].d.c("itemCraftingRule2"))
+        rules[1] = this.anvilItemStacks[1].d.d("itemCraftingRule2");
+      else {
+        rules[1] = CraftingRule.ANY.Action;
+      }
+      if (this.anvilItemStacks[1].d.c("itemCraftingRule3"))
+        rules[2] = this.anvilItemStacks[1].d.d("itemCraftingRule3");
+      else
+        rules[2] = CraftingRule.ANY.Action;
+    }
+    else
+    {
+      rules[0] = CraftingRule.ANY.Action;
+      rules[1] = CraftingRule.ANY.Action;
+      rules[2] = CraftingRule.ANY.Action;
+    }
+    return rules;
+  }
+
+  public void actionHeavyHammer()
+  {
+    if (!this.i.F)
+    {
+      if ((isTemperatureWorkable(1).booleanValue()) && (this.anvilItemStacks[0] != null) && ((this.anvilItemStacks[1].i() == 0) || (this.anvilItemStacks[1].a().g() == true)) && (getAnvilType() >= this.craftingReq) && (this.workedRecently == 0))
+      {
+        this.workedRecently = 5;
+        setItemCraftingValue(-9);
+        updateRules(0, 1);
+        this.anvilItemStacks[0].b(this.anvilItemStacks[0].i() + 1);
+
+        if (this.anvilItemStacks[0].i() == this.anvilItemStacks[0].j()) {
+          this.anvilItemStacks[0] = null;
+        }
+      }
+    }
+    else
+    {
+
+//    mod_TFC_Core.proxy.sendCustomPacket(PacketHandler.getPacket((TileEntityTerraAnvil) this, 0));
+    }
+  }
+
+  public void actionLightHammer()
+  {
+    if (!this.i.F)
+    {
+      if ((isTemperatureWorkable(1).booleanValue()) && (this.anvilItemStacks[0] != null) && ((this.anvilItemStacks[1].i() == 0) || (this.anvilItemStacks[1].a().g() == true)) && (getAnvilType() >= this.craftingReq) && (this.workedRecently == 0))
+      {
+        this.workedRecently = 5;
+        setItemCraftingValue(-3);
+        updateRules(0, 1);
+        this.anvilItemStacks[0].b(this.anvilItemStacks[0].i() + 1);
+
+        if (this.anvilItemStacks[0].i() == this.anvilItemStacks[0].j()) {
+          this.anvilItemStacks[0] = null;
+        }
+      }
+    }
+    else
+    {
+      mod_TFC_Core.proxy.sendCustomPacket(PacketHandler.getPacket((TFC_Core.TileEntityTerraAnvil) this, -1));
+    }
+  }
+
+  public void actionDraw()
+  {
+    if (!this.i.F)
+    {
+      if ((isTemperatureWorkable(1).booleanValue()) && (this.anvilItemStacks[0] != null) && ((this.anvilItemStacks[1].i() == 0) || (this.anvilItemStacks[1].a().g() == true)) && (getAnvilType() >= this.craftingReq) && (this.workedRecently == 0))
+      {
+        this.workedRecently = 5;
+        setItemCraftingValue(-15);
+        updateRules(1, 1);
+        this.anvilItemStacks[0].b(this.anvilItemStacks[0].i() + 1);
+
+        if (this.anvilItemStacks[0].i() == this.anvilItemStacks[0].j()) {
+          this.anvilItemStacks[0] = null;
+        }
+      }
+    }
+    else
+    {
+ //     mod_TFC_Core.proxy.sendCustomPacket(PacketHandler.getPacket((TileEntityTerraAnvil) this, 1));
+    }
+  }
+
+  public void actionQuench()
+  {
+    if (!this.i.F)
+    {
+      if ((isTemperatureWorkable(1).booleanValue()) && (this.anvilItemStacks[0] != null) && ((this.anvilItemStacks[1].i() == 0) || (this.anvilItemStacks[1].a().g() == true)) && (getAnvilType() >= this.craftingReq) && (this.workedRecently == 0))
+      {
+        this.workedRecently = 5;
+        setItemCraftingValue(-49);
+        updateRules(2, 1);
+        this.anvilItemStacks[0].b(this.anvilItemStacks[0].i() + 1);
+
+        if (this.anvilItemStacks[0].i() == this.anvilItemStacks[0].j()) {
+          this.anvilItemStacks[0] = null;
+        }
+      }
+    }
+    else
+    {
+    //  mod_TFC_Core.proxy.sendCustomPacket(PacketHandler.getPacket((TileEntityTerraAnvil) this, 2));
+    }
+  }
+
+  public void actionPunch()
+  {
+    if (!this.i.F)
+    {
+      if ((isTemperatureWorkable(1).booleanValue()) && (this.anvilItemStacks[0] != null) && ((this.anvilItemStacks[1].i() == 0) || (this.anvilItemStacks[1].a().g() == true)) && (getAnvilType() >= this.craftingReq) && (this.workedRecently == 0))
+      {
+        this.workedRecently = 5;
+        setItemCraftingValue(2);
+        updateRules(3, 1);
+        this.anvilItemStacks[0].b(this.anvilItemStacks[0].i() + 1);
+
+        if (this.anvilItemStacks[0].i() == this.anvilItemStacks[0].j()) {
+          this.anvilItemStacks[0] = null;
+        }
+      }
+    }
+    else
+    {
+   //   mod_TFC_Core.proxy.sendCustomPacket(PacketHandler.getPacket((TileEntityTerraAnvil) this, 3));
+    }
+  }
+
+  public void actionBend()
+  {
+    if (!this.i.F)
+    {
+      if ((isTemperatureWorkable(1).booleanValue()) && (this.anvilItemStacks[0] != null) && ((this.anvilItemStacks[1].i() == 0) || (this.anvilItemStacks[1].a().g() == true)) && (getAnvilType() >= this.craftingReq) && (this.workedRecently == 0))
+      {
+        this.workedRecently = 5;
+        setItemCraftingValue(7);
+        updateRules(4, 1);
+        this.anvilItemStacks[0].b(this.anvilItemStacks[0].i() + 1);
+
+        if (this.anvilItemStacks[0].i() == this.anvilItemStacks[0].j()) {
+          this.anvilItemStacks[0] = null;
+        }
+      }
+    }
+    else
+    {
+      //mod_TFC_Core.proxy.sendCustomPacket(PacketHandler.getPacket((TileEntityTerraAnvil) this, 4));
+    }
+  }
+
+  public void actionUpset()
+  {
+    if (!this.i.F)
+    {
+      if ((isTemperatureWorkable(1).booleanValue()) && (this.anvilItemStacks[0] != null) && ((this.anvilItemStacks[1].i() == 0) || (this.anvilItemStacks[1].a().g() == true)) && (getAnvilType() >= this.craftingReq) && (this.workedRecently == 0))
+      {
+        this.workedRecently = 5;
+        setItemCraftingValue(13);
+        updateRules(5, 1);
+        this.anvilItemStacks[0].b(this.anvilItemStacks[0].i() + 1);
+
+        if (this.anvilItemStacks[0].i() == this.anvilItemStacks[0].j()) {
+          this.anvilItemStacks[0] = null;
+        }
+      }
+    }
+    else
+    {
+//      mod_TFC_Core.proxy.sendCustomPacket(PacketHandler.getPacket((TileEntityTerraAnvil) this, 5));
+    }
+  }
+
+  public void actionShrink()
+  {
+    if (!this.i.F)
+    {
+      if ((isTemperatureWorkable(1).booleanValue()) && (this.anvilItemStacks[0] != null) && ((this.anvilItemStacks[1].i() == 0) || (this.anvilItemStacks[1].a().g() == true)) && (getAnvilType() >= this.craftingReq) && (this.workedRecently == 0))
+      {
+        this.workedRecently = 5;
+        setItemCraftingValue(16);
+        updateRules(6, 1);
+        this.anvilItemStacks[0].b(this.anvilItemStacks[0].i() + 1);
+
+        if (this.anvilItemStacks[0].i() == this.anvilItemStacks[0].j()) {
+          this.anvilItemStacks[0] = null;
+        }
+      }
+    }
+    else
+    {
+//      mod_TFC_Core.proxy.sendCustomPacket(PacketHandler.getPacket((TileEntityTerraAnvil) this, 6));
+    }
+  }
+
+  public void actionWeld()
+  {
+    if (!this.i.F)
+    {
+      if ((isTemperatureWeldable(2).booleanValue()) && (isTemperatureWeldable(3).booleanValue()) && (this.anvilItemStacks[0] != null) && ((this.anvilItemStacks[2].i() == 0) || (this.anvilItemStacks[2].a().g() == true)) && ((this.anvilItemStacks[3].i() == 0) || (this.anvilItemStacks[3].a().g() == true)) && (this.workedRecently == 0) && (this.anvilItemStacks[4] == null))
+      {
+        AnvilCraftingManagerTFC manager = AnvilCraftingManagerTFC.getInstance();
+        Random R = new Random(this.i.v());
+        AnvilRecipe recipe = new AnvilRecipe(this.anvilItemStacks[2], this.anvilItemStacks[3], 0, CraftingRule.ANY, CraftingRule.ANY, CraftingRule.ANY, this.anvilItemStacks[7] != null, this.AnvilTier, null);
+
+        AnvilRecipe recipe2 = new AnvilRecipe(this.anvilItemStacks[3], this.anvilItemStacks[2], 0, CraftingRule.ANY, CraftingRule.ANY, CraftingRule.ANY, this.anvilItemStacks[7] != null, this.AnvilTier, null);
+
+        aan result = manager.findCompleteWeldRecipe(recipe);
+        if (result == null) {
+          result = manager.findCompleteWeldRecipe(recipe2);
+        }
+        if (result != null)
+        {
+          ady Tag = new ady();
+          Tag.a("temperature", (TFCHeat.GetTemperature(this.anvilItemStacks[2]) + TFCHeat.GetTemperature(this.anvilItemStacks[3])) / 2.0F);
+          this.anvilItemStacks[4] = result;
+          this.anvilItemStacks[4].d(Tag);
+          aan item = new aan(this.anvilItemStacks[7].a(), this.anvilItemStacks[7].a - 1);
+          if (item.a == 0) {
+            item = null;
+          }
+          aan item2 = new aan(this.anvilItemStacks[0].a(), this.anvilItemStacks[0].a - 1);
+          if (item2.a == 0) {
+            item2 = null;
+          }
+          this.anvilItemStacks[2] = null;
+          this.anvilItemStacks[3] = null;
+          this.anvilItemStacks[7] = null;
+        }
+      }
+    }
+    else
+    {
+//      mod_TFC_Core.proxy.sendCustomPacket(PacketHandler.getPacket((TileEntityTerraAnvil) this, 7));
+    }
+  }
+
+  public void f()
+  {
+    this.workRecipe = null;
+  }
+
+  public aan a(int i, int j)
+  {
+    if (this.anvilItemStacks[i] != null)
+    {
+      if (this.anvilItemStacks[i].a <= j)
+      {
+        aan itemstack = this.anvilItemStacks[i];
+        this.anvilItemStacks[i] = null;
+        return itemstack;
+      }
+      aan itemstack1 = this.anvilItemStacks[i].a(j);
+      if (this.anvilItemStacks[i].a == 0)
+      {
+        this.anvilItemStacks[i] = null;
+      }
+      return itemstack1;
+    }
+
+    return null;
+  }
+
+  public void ejectContents()
+  {
+    float f3 = 0.05F;
+
+    Random rand = new Random();
+    float f = rand.nextFloat() * 0.8F + 0.1F;
+    float f1 = rand.nextFloat() * 2.0F + 0.4F;
+    float f2 = rand.nextFloat() * 0.8F + 0.1F;
+
+    for (int i = 0; i < a(); i++)
+    {
+      if (this.anvilItemStacks[i] == null)
+        continue;
+      fq entityitem = new fq(this.i, this.j + f, this.k + f1, this.l + f2, this.anvilItemStacks[i]);
+
+      entityitem.r = ((float)rand.nextGaussian() * f3);
+      entityitem.s = ((float)rand.nextGaussian() * f3 + 0.2F);
+      entityitem.t = ((float)rand.nextGaussian() * f3);
+      this.i.a(entityitem);
+    }
+  }
+
+  public int getAnvilType()
+  {
+    return this.n & 0x7;
+  }
+
+  public int d()
+  {
+    return 1;
+  }
+
+  public String c()
+  {
+    return "Anvil";
+  }
+
+  public boolean setItemCraftingValue(int i)
+  {
+    if ((this.anvilItemStacks[1] != null) && (this.anvilItemStacks[1].n()) && (this.anvilItemStacks[1].o().c("itemCraftingValue")))
+    {
+      Byte icv = Byte.valueOf(this.anvilItemStacks[1].o().d("itemCraftingValue"));
+      this.anvilItemStacks[1].o().a("itemCraftingValue", (byte)(icv.byteValue() + i));
+      return true;
+    }
+    if ((this.anvilItemStacks[1] != null) && (this.anvilItemStacks[1].n()))
+    {
+      this.anvilItemStacks[1].o().a("itemCraftingValue", (byte)i);
+      return true;
+    }
+    if ((this.anvilItemStacks[1] != null) && (!this.anvilItemStacks[1].n()))
+    {
+      ady Tag = new ady();
+      Tag.a("itemCraftingValue", (byte)i);
+      this.anvilItemStacks[1].d = Tag;
+      return true;
+    }
+    return false;
+  }
+
+  public int getItemCraftingValue() {
+    if ((this.anvilItemStacks[1] != null) && (this.anvilItemStacks[1].n()) && (this.anvilItemStacks[1].o().c("itemCraftingValue")))
+    {
+      return this.anvilItemStacks[1].o().d("itemCraftingValue");
+    }
+    if ((this.anvilItemStacks[1] != null) && (!this.anvilItemStacks[1].n()) && (this.craftingValue != 0))
+    {
+      ady Tag = new ady();
+      Tag.a("itemCraftingValue", 0);
+      this.anvilItemStacks[1].d(Tag);
+      return 0;
+    }
+    if ((this.anvilItemStacks[1] != null) && (this.anvilItemStacks[1].n()) && (!this.anvilItemStacks[1].o().c("itemCraftingValue")) && (this.craftingValue != 0))
+    {
+      ady Tag = this.anvilItemStacks[1].o();
+      Tag.a("itemCraftingValue", 0);
+      this.anvilItemStacks[1].d(Tag);
+      return 0;
+    }
+    return 0;
+  }
+
+  public int getItemCraftingValueNoSet(int i)
+  {
+    if ((this.anvilItemStacks[i] != null) && (this.anvilItemStacks[i].n()))
+    {
+      if (!this.anvilItemStacks[i].o().c("itemCraftingValue"))
+      {
+        return 0;
+      }
+
+      return this.anvilItemStacks[i].o().d("itemCraftingValue");
+    }
+
+    if ((this.anvilItemStacks[i] != null) && (!this.anvilItemStacks[i].n()))
+    {
+      return 0;
+    }
+    return 0;
+  }
+
+  public Boolean isTemperatureWeldable(int i)
+  {
+    HeatManager manager = HeatManager.getInstance();
+    if ((this.anvilItemStacks[i] != null) && (this.anvilItemStacks[i].n()) && (this.anvilItemStacks[i].o().c("temperature")))
+    {
+      HeatIndex index = manager.findMatchingIndex(this.anvilItemStacks[i]);
+      if (index != null)
+      {
+        float temp = this.anvilItemStacks[i].o().h("temperature");
+
+        return Boolean.valueOf((temp < index.meltTemp) && (temp > index.meltTemp - index.meltTemp * 0.2D) && ((!(this.anvilItemStacks[i].a() instanceof ItemTerraMeltedMetal)) || (this.anvilItemStacks[i].i() == 0)));
+      }
+
+    }
+
+    return Boolean.valueOf(false);
+  }
+
+  public Boolean isTemperatureWorkable(int i)
+  {
+    HeatManager manager = HeatManager.getInstance();
+    if ((this.anvilItemStacks[i] != null) && (this.anvilItemStacks[i].n()) && (this.anvilItemStacks[i].o().c("temperature")))
+    {
+      HeatIndex index = manager.findMatchingIndex(this.anvilItemStacks[i]);
+      if (index != null)
+      {
+        float temp = this.anvilItemStacks[i].o().h("temperature");
+
+        return Boolean.valueOf((temp < index.meltTemp) && (temp > index.meltTemp - index.meltTemp * 0.4D) && ((!(this.anvilItemStacks[i].a() instanceof ItemTerraMeltedMetal)) || (this.anvilItemStacks[i].i() == 0)));
+      }
+
+    }
+
+    return Boolean.valueOf(false);
+  }
+
+  public void b(ady nbttagcompound)
+  {
+    super.b(nbttagcompound);
+
+    no nbttaglist = new no();
+    for (int i = 0; i < this.anvilItemStacks.length; i++)
+    {
+      if (this.anvilItemStacks[i] == null)
+        continue;
+      ady nbttagcompound1 = new ady();
+      nbttagcompound1.a("Slot", (byte)i);
+      this.anvilItemStacks[i].b(nbttagcompound1);
+      nbttaglist.a(nbttagcompound1);
+    }
+
+    nbttagcompound.a("Items", nbttaglist);
+    nbttagcompound.a("Tier", this.AnvilTier);
+  }
+
+  public void a(ady nbttagcompound)
+  {
+    super.a(nbttagcompound);
+
+    no nbttaglist = nbttagcompound.n("Items");
+    this.anvilItemStacks = new aan[a()];
+    for (int i = 0; i < nbttaglist.d(); i++)
+    {
+      ady nbttagcompound1 = (ady)nbttaglist.a(i);
+      byte byte0 = nbttagcompound1.d("Slot");
+      if ((byte0 < 0) || (byte0 >= this.anvilItemStacks.length))
+        continue;
+      this.anvilItemStacks[byte0] = aan.a(nbttagcompound1);
+    }
+
+    this.AnvilTier = nbttagcompound.f("Tier");
+  }
+
+  public void a(int i, aan itemstack)
+  {
+    this.anvilItemStacks[i] = itemstack;
+    if ((itemstack != null) && (itemstack.a > d()))
+    {
+      itemstack.a = d();
+    }
+  }
+
+  public boolean a_(yw entityplayer)
+  {
+    return false;
+  }
+
+  public void e()
+  {
+  }
+
+  public int a()
+  {
+    return this.anvilItemStacks.length;
+  }
+
+  public aan k_(int i)
+  {
+    return this.anvilItemStacks[i];
+  }
+
+  public aan b(int var1)
+  {
+    return null;
+  }
+
+  public void handlePacketData(int id)
+  {
+    switch (id)
+    {
+    case -1:
+      actionLightHammer();
+      break;
+    case 0:
+      actionHeavyHammer();
+      break;
+    case 1:
+      actionDraw();
+      break;
+    case 2:
+      actionQuench();
+      break;
+    case 3:
+      actionPunch();
+      break;
+    case 4:
+      actionBend();
+      break;
+    case 5:
+      actionUpset();
+      break;
+    case 6:
+      actionShrink();
+      break;
+    case 7:
+      actionWeld();
+    }
+  }
+}

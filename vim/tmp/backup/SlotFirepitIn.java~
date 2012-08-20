@@ -1,0 +1,18 @@
+//package TFC.Containers;
+
+import io;
+import yu;
+import yw;
+
+public class SlotFirepitIn extends yu
+{
+  public SlotFirepitIn(yw entityplayer, io iinventory, int i, int j, int k)
+  {
+    super(iinventory, i, j, k);
+  }
+
+  public int a()
+  {
+    return 10;
+  }
+}

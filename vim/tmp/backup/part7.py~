@@ -1,0 +1,53 @@
+#!/usr/bin/python2
+import re
+import urllib2
+from StringIO import StringIO
+import Image
+
+
+def get_bounds(img, pos):
+        h = img.getbbox()[3]
+        res = []
+        prev = None
+        prevId = -1
+
+        for i in xrange(h):
+                cur = img.getpixel((pos, i))
+                if cur != prev:
+                        if prevId < i - 1:
+                                res.append((prevId, i - 1))
+                        prevId = i
+
+                prev = cur
+        return res
+
+
+def ltos(l):
+        return ''.join(map(chr, l))
+
+
+def process(img, rng, wPos):
+        res = []
+        prev = None
+        for i in rng:
+                cur = img.getpixel((i, wPos))
+                if cur != prev:
+                                res += [cur[0]]
+                #prev = cur
+        return res
+        #return ''.join(map(chr, res))
+
+if __name__ == '__main__':
+        url = 'http://www.pythonchallenge.com/pc/def/oxygen.png'
+
+        print 'Loading image...'
+        img = Image.open(StringIO(urllib2.urlopen(url).read()))
+        w, h = img.getbbox()[2:]
+        print "Width: {0}, Heigh: {1}".format(w, h)
+        print 'Processing...'
+
+        bounds = get_bounds(img, 0)[0]
+        res = ltos(process(img, xrange(0, w - 21, 7), bounds[0]))
+        print res
+        l = eval(re.findall('\[.*\]', res)[0])
+        print ltos(l)
