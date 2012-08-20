@@ -1,6 +1,0 @@
-#!/bin/sh
-rm -rf binary/*
-javac -cp libs/lwjgl.jar:minecraft.jar -d binary sources/*
-
-
-

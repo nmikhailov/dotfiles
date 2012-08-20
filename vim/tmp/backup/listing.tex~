@@ -1,3 +1,0 @@
-\charpet{Листинг программы}
-Алгоритмы из статьи:
-\lstinputlisting[language=Python]{programms/lib.py}
