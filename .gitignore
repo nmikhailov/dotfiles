@@ -1,4 +1,4 @@
-./xmonad/*
-./scripts/*
-./vim/tmp
-./ncmpcpp/error.log
+xmonad/*
+scripts/*
+vim/tmp
+ncmpcpp/error.log
