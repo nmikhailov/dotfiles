@@ -78,4 +78,4 @@ if [ "$TERM" = "linux" ]; then
     echo -en "\e]PFc0c0c0" #white
     clear # bring us back to default input colours
 fi
-export TERM='screen-256color'
+[ -n "$TMUX" ] && export TERM='screen-256color'
