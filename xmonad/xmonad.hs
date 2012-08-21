@@ -144,7 +144,7 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 
 -- Workspaces
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["TERM", "WEBS", "CODE", "GRFX", "CHAT", "GAME", "VIDS", "OTHR"]
+myWorkspaces = ["1:TERM", "2:WEBS", "3:CODE", "4:GRFX", "5:CHAT", "6:GAME", "7:VIDS", "8:OTHR"]
 
 
 --------------------------------------------------------------------------------------------

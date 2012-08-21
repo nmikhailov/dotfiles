@@ -1,5 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_cnt =9
 let g:netrw_dirhist_1='/home/nsl/.vim'
 let g:netrw_dirhist_2='/home/nsl/.minecraft_tfc/bin/test/mods'
 let g:netrw_dirhist_3='/etc/rc.d'
@@ -8,3 +8,4 @@ let g:netrw_dirhist_5='/etc'
 let g:netrw_dirhist_6='/home/nsl/Repositories/dotfiles'
 let g:netrw_dirhist_7='/etc/rc.d'
 let g:netrw_dirhist_8='/etc/modules-load.d'
+let g:netrw_dirhist_9='/home/nsl/.colours'
