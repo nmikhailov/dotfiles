@@ -54,7 +54,7 @@ main = do
     topStatusBar            <- spawnPipe myTopStatusBar
     replace
     xmonad $ myUrgencyHook $ defaultConfig
-        { terminal           = "urxvt"
+        { terminal           = "urxvt -e tmux"
         , modMask            = mod4Mask
         , focusFollowsMouse  = True
         , borderWidth        = 1
@@ -144,7 +144,7 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 
 -- Workspaces
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["1:TERM", "2:WEBS", "3:CODE", "4:GRFX", "5:CHAT", "6:GAME", "7:VIDS", "8:OTHR"]
+myWorkspaces = ["1:TERM", "2:WEBS", "3:CODE", "4:GRFX", "5:CHAT", "6:VIDS", "7:ETC", "8:ETC", "9:ETC"]
 
 
 --------------------------------------------------------------------------------------------
@@ -194,8 +194,8 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 
 -- Scratchpad (W+º)
 manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect (0) (1/50) (1) (3/4))
-scratchPad = scratchpadSpawnActionCustom "urxvt -name scratchpad"
+manageScratchPad = scratchpadManageHook (W.RationalRect (0) (1/50) (1) (5/9))
+scratchPad = scratchpadSpawnActionCustom "urxvt -name scratchpad -e tmux"
 
 -- Manage hook
 myManageHook :: ManageHook
@@ -204,8 +204,8 @@ myManageHook = (composeAll . concat $
     , [className    =? c     --> doShift (myWorkspaces !! 1)          | c <- myWebS   ] --move myWebS windows to workspace 1 by classname
     , [className    =? c     --> doShift (myWorkspaces !! 4)          | c <- myChatS  ] --move myChatS windows to workspace 4 by classname
     , [className    =? c     --> doShift (myWorkspaces !! 3)          | c <- myGfxS   ] --move myGfxS windows to workspace 4 by classname
-    , [className    =? c     --> doShiftAndGo (myWorkspaces !! 5)     | c <- myGameS  ] --move myGameS windows to workspace 5 by classname and shift
-    , [className    =? c     --> doShiftAndGo (myWorkspaces !! 7)     | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift
+--    , [className    =? c     --> doShiftAndGo (myWorkspaces !! 5)     | c <- myGameS  ] --move myGameS windows to workspace 5 by classname and shift
+    , [className    =? c     --> doShiftAndGo (myWorkspaces !! 8)     | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift
     , [className    =? c     --> doCenterFloat                        | c <- myFloatCC] --float center geometry by classname
     , [name         =? n     --> doCenterFloat                        | n <- myFloatCN] --float center geometry by name
     , [name         =? n     --> doSideFloat NW                       | n <- myFloatSN] --float side NW geometry by name
@@ -220,7 +220,7 @@ myManageHook = (composeAll . concat $
         myWebS          = ["Chromium","Firefox", "Opera"]
         myGfxS          = ["Gimp", "gimp", "GIMP"]
         myChatS         = ["Pidgin", "Xchat"]
-        myGameS         = ["zsnes"]
+--        myGameS         = ["zsnes"]
         myOtherS        = ["Amule", "Transmission-gtk"]
         myFloatCC       = ["MPlayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock", "Desmume", "Ossxmix", "Xvidcap", "Main", "Wicd-client.py", "com-mathworks-util-PostVMInit"]
         myFloatCN       = ["ePSXe - Enhanced PSX emulator", "Seleccione Archivo", "Config Video", "Testing plugin", "Config Sound", "Config Cdrom", "Config Bios", "Config Netplay", "Config Memcards", "About ePSXe", "Config Controller", "Config Gamepads", "Select one or more files to open", "Add media", "Choose a file", "Open Image", "File Operation Progress", "Firefox Preferences", "Preferences", "Search Engines", "Set up sync", "Passwords and Exceptions", "Autofill Options", "Rename File", "Copying files", "Moving files", "File Properties", "Replace", ""]
