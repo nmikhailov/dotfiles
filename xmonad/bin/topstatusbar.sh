@@ -67,11 +67,11 @@ printVolInfo() {
 }
 
 printCPUInfo() {
-    [[ $CPULoad0 -gt 70 ]] && CPULoad0="^fg($CRIT)$CPULoad0^fg()"
-    [[ $CPULoad1 -gt 70 ]] && CPULoad1="^fg($CRIT)$CPULoad1^fg()"
-    [[ $CPULoad2 -gt 70 ]] && CPULoad2="^fg($CRIT)$CPULoad2^fg()"
+#    [[ $CPULoad0 -gt 70 ]] && CPULoad0="^fg($CRIT)$CPULoad0^fg()"
+#    [[ $CPULoad1 -gt 70 ]] && CPULoad1="^fg($CRIT)$CPULoad1^fg()"
+#    [[ $CPULoad2 -gt 70 ]] && CPULoad2="^fg($CRIT)$CPULoad2^fg()"
     [[ $CPULoad3 -gt 70 ]] && CPULoad3="^fg($CRIT)$CPULoad3^fg()"
-    echo -n " ^fg($DZEN_FG2)CPU ^fg($BAR_FG)${CPULoad0}%^fg($DZEN_FG2)/^fg($BAR_FG)${CPULoad1}%^fg($DZEN_FG2)/^fg($BAR_FG)${CPULoad2}%^fg($DZEN_FG2)/^fg($BAR_FG)${CPULoad3}%"
+    echo -n " ^fg($DZEN_FG2)CPU ^fg($BAR_FG)${CPULoad3}%"
     return
 }
 
@@ -109,7 +109,7 @@ printMpdInfo() {
         [[ $MpdRandom == "On" ]] && MpdRandom="^fg($CRIT)$MpdRandom^fg()"
         #echo -n "^fg($DZEN_FG2)^ca(1,$MPD_REP_CMD)REPEAT^ca() ^fg()$MpdRepeat "
         #echo -n "^fg($DZEN_FG2)| ^ca(1,$MPD_RAND_CMD)RANDOM^ca() ^fg()$MpdRandom "
-        echo -n "^fg($DZEN_FG2)| ^ca(1,$MPD_TOGGLE_CMD)^ca(3,$MPD_STOP_CMD)^ca(4,$MPD_NEXT_CMD)^ca(5,$MPD_PREV_CMD)MPD^ca()^ca()^ca()^ca() $MpdInfo"
+        echo -n "^ca(1,$MPD_TOGGLE_CMD)^ca(3,$MPD_STOP_CMD)^ca(4,$MPD_NEXT_CMD)^ca(5,$MPD_PREV_CMD)MPD^ca()^ca()^ca()^ca() $MpdInfo"
     fi
     return
 }
@@ -126,7 +126,7 @@ printSpace() {
 
 printLeft() {
     while true; do
-        read CPULoad0 CPULoad1 CPULoad2 CPULoad3 CPUFreq MemUsed MemPerc MpdInfo MpdRandom MpdRepeat
+        read CPULoad3 CPUFreq MemUsed MemPerc MpdInfo MpdRandom MpdRepeat
         printVolInfo
         printSpace
         printDropBoxInfo
@@ -140,7 +140,7 @@ printLeft() {
 
 printRight() {
     while true; do
-        read CPULoad0 CPULoad1 CPULoad2 CPULoad3 CPUFreq MemUsed MemPerc MpdInfo MpdRandom MpdRepeat
+        read CPULoad3 CPUFreq MemUsed MemPerc MpdInfo MpdRandom MpdRepeat
         printCPUInfo
         printSpace
         printMemInfo

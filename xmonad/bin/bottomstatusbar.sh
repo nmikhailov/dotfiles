@@ -75,9 +75,9 @@ printWifiInfo() {
 }
 
 printLanInfo() {
-    LAN=$(ip addr show eth0 | grep "inet ")
+    LAN=$(ip addr show eth0 | grep "inet " | wc -l)
     echo -n "^fg($DZEN_FG2)LAN "
-    if [[ $LAN -ne "1" ]]; then
+    if [[ $LAN -ne 1 ]]; then
         echo -n "^fg($CRIT)N/A"
     else
         echo -n "^fg($BAR_FG)OK "

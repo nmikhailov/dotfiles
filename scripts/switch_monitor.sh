@@ -1,7 +1,7 @@
 #!/bin/bash
 # Init numlockx
 internal=`xrandr | grep LVDS | sed -e "s/ .*//g"`
-external=`xrandr | grep VGA | sed -e "s/ .*//g"`
+external=`xrandr | grep HDMI | sed -e "s/ .*//g"`
 #echo "Internal: "$internal
 #echo "External: "$external
 
