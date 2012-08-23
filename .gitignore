@@ -2,3 +2,5 @@ xmonad/*
 scripts/*
 vim/tmp
 ncmpcpp/error.log
+
+*.swp
