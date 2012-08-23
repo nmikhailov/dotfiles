@@ -43,11 +43,10 @@ printBattery() {
         RPERC=$(acpi -b | awk '{print $4}' | tr -d "%,")
         echo -n "^fg($DZEN_FG2)BAT "
         if [[ $ACPresent == "1" ]]; then
-            echo -n "$(echo $RPERC | gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BIGBAR_W -s o -ss 1 -sw 2 -nonl)"
+            echo -n " ^fg($BAR_FG)$RPERC%"
         else
-            echo -n "$(echo $RPERC | gdbar -fg $CRIT -bg $BAR_BG -h $BAR_H -w $BIGBAR_W -s o -ss 1 -sw 2 -nonl)"
-        fi
-        echo -n " ^fg($DZEN_FG2)$RPERC%"
+            echo -n " ^fg($CRIT)$RPERC%"
+       fi
     fi
     return
 }
@@ -66,8 +65,8 @@ printWifiInfo() {
     echo -n "^fg($DZEN_FG2)WIFI "
     if [[ $WIFIDOWN -ne "1" ]]; then
         WIFISIGNAL=$(wicd-cli --wireless -d | grep Quality | awk '{print $2}')
-        echo -n "$(echo $WIFISIGNAL | gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BIGBAR_W -s o -ss 1 -sw 2 -nonl) "
-        echo -n "^fg()$WIFISIGNAL% "
+#        echo -n "$(echo $WIFISIGNAL | gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BIGBAR_W -s o -ss 1 -sw 2 -nonl) "
+        echo -n "^fg($BAR_FG)$WIFISIGNAL% "
     else
         echo -n "^fg($CRIT)N/A "
     fi
@@ -95,8 +94,8 @@ printBottomBar() {
         printSpace
         printBattery
         printSpace
-        printBrightnessInfo
-        printSpace
+#        printBrightnessInfo
+#        printSpace
         printWifiInfo
         printSpace
         printLanInfo

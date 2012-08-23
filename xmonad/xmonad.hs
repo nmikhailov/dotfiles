@@ -374,9 +374,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask, xK_o), restart "~/.xmonad/bin/obtoxmd.hs" True)
     , ((0, xF86XK_AudioMute), spawn "sh ~/.xmonad/bin/voldzen.sh t -d")                     --Mute/unmute volume
     , ((0, xF86XK_AudioRaiseVolume), spawn "sh ~/.xmonad/bin/voldzen.sh + -d")              --Raise volume
-    , ((mod1Mask, xK_Up), spawn "sh ~/.xmonad/bin/voldzen.sh + -d")
+    , ((mod1Mask, xK_bracketright), spawn "sh ~/.xmonad/bin/voldzen.sh + -d")
     , ((0, xF86XK_AudioLowerVolume), spawn "sh ~/.xmonad/bin/voldzen.sh - -d")              --Lower volume
-    , ((mod1Mask, xK_Down), spawn "sh ~/.xmonad/bin/voldzen.sh - -d")
+    , ((mod1Mask, xK_bracketleft), spawn "sh ~/.xmonad/bin/voldzen.sh - -d")
     , ((0, xF86XK_AudioNext), spawn "ncmpcpp next")                                            --next song
     , ((mod1Mask, xK_Right), spawn "ncmpcpp next")
     , ((0, xF86XK_AudioPrev), spawn "ncmpcpp prev")                                            --prev song

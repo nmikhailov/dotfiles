@@ -23,18 +23,6 @@ zstyle ':completion:*:processes-names' command 'ps xho command'
 bindkey "\e[5~" beginning-of-history # PageUp
 bindkey "\e[6~" end-of-history # PageDown
 
-#PROMPT="$FG[248]%T $FX[bold]$FG[110]%n@%m$FX[reset] $FG[248]%. $FX[bold]$FG[111]\$$FX[reset] "
-#PROMPT="%{$fg[$ucolor]%}%n%{$reset_color%}%{$reset_color%}:%{$fg[green]%}%0~%{$fg[red]%}%(?.. [%?]) %{$reset_color%}%% "
-
-# TMUX auto start
-#if which tmux 2>&1 >/dev/null; then
-    #if not inside a tmux session, and if no session is started, start a new session
-#    test -z "$TMUX" && (tmux attach || tmux new-session)
-#fi
-
-#bindkey 'I' vi-cmd-mode
-#bindkey -M viins 'ESC' vi-cmd-mode
-
 orphans() {
     if [[ ! -n $(pacman -Qdt) ]]; then
         echo no orphans to remove
@@ -47,15 +35,6 @@ orphans() {
 eval $(dircolors -b ~/.dir_colors)
 alias grep='grep --color=always'
 export GREP_COLOR="1;33"
-######## TTY Colours #######
-
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
 
 ## linux console colors (jwr dark) ###
 
@@ -79,3 +58,4 @@ if [ "$TERM" = "linux" ]; then
     clear # bring us back to default input colours
 fi
 [ -n "$TMUX" ] && export TERM='screen-256color'
+set -o vi
