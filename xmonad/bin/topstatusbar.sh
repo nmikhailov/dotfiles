@@ -24,7 +24,7 @@ COLOR_SEP=$DZEN_FG2
 FONT="-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
 
 #Conky
-CONKYFILE="${HOME}/.config/conky/conkyrc"
+CONKYFILE="${HOME}/.xmonad/conky/conkyrc"
 IFS='|'
 INTERVAL=1
 CPUTemp=0
