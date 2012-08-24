@@ -9,6 +9,7 @@ PATH=~/.gem/ruby/1.9.1/bin/:~/.bin/:~/Scripts/:$PATH
 export EDITOR='vim'
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 
+set -o vi
 alias cd..='cd ..'
 alias xclip='xclip -selection clipboard'
 alias git-diff='git diff --color'
@@ -55,7 +56,6 @@ if [ "$TERM" = "linux" ]; then
     clear # bring us back to default input colours
 fi
 [ -n "$TMUX" ] && export TERM='screen-256color'
-set -o vi
 bindkey "\e[1~" beginning-of-line # Home
 bindkey "\e[4~" end-of-line # End
 bindkey "\e[5~" beginning-of-history # PageUp
