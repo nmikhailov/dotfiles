@@ -1,4 +1,4 @@
-plugins=(archlinux git sprunge tmux vim python yaourt)
+plugins=(archlinux git sprunge tmux vim python yaourt vi-mode)
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="wezm"
 source $ZSH/oh-my-zsh.sh
@@ -9,17 +9,17 @@ PATH=~/.gem/ruby/1.9.1/bin/:~/.bin/:~/Scripts/:$PATH
 export EDITOR='vim'
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 
-set -o vi
 alias cd..='cd ..'
 alias xclip='xclip -selection clipboard'
-alias git-diff='git diff --color'
 alias svim='sudo vim'
 alias systemctl='sudo systemctl'
+alias ssh_term="TERM=linux ssh"
 
 unsetopt correctall
 zstyle ':completion:*:processes' command 'ps xua'
 zstyle ':completion:*:processes' sort true
 zstyle ':completion:*:processes-names' command 'ps xho command'
+
 
 orphans() {
     if [[ ! -n $(pacman -Qdt) ]]; then
@@ -55,7 +55,6 @@ if [ "$TERM" = "linux" ]; then
     echo -en "\e]PFc0c0c0" #white
     clear # bring us back to default input colours
 fi
-[ -n "$TMUX" ] && export TERM='screen-256color'
 bindkey "\e[1~" beginning-of-line # Home
 bindkey "\e[4~" end-of-line # End
 bindkey "\e[5~" beginning-of-history # PageUp
@@ -78,3 +77,8 @@ bindkey "\eOH" beginning-of-line
 bindkey "^[[1;5D" backward-word
 bindkey "^[[1;5C" forward-word
 bindkey "\e[3~" delete-char # Del
+
+[ -n "$TMUX" ] && export TERM='screen-256color'
+#PS1+='$(vi_mode_prompt_info)'
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
