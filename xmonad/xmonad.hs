@@ -217,13 +217,13 @@ myManageHook = (composeAll . concat $
         role            = stringProperty "WM_WINDOW_ROLE"
         name            = stringProperty "WM_NAME"
         myIgnores       = ["desktop","desktop_window"]
-        myWebS          = ["Chromium","Firefox", "Opera"]
+        myWebS          = ["Chromium","Firefox", "Opera", "Vimprobable2"]
         myGfxS          = ["Gimp", "gimp", "GIMP"]
-        myChatS         = ["Pidgin", "Xchat"]
+        myChatS         = ["Pidgin", "Xchat", "Skype"]
 --        myGameS         = ["zsnes"]
         myOtherS        = ["Amule", "Transmission-gtk"]
         myFloatCC       = ["MPlayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock", "Desmume", "Ossxmix", "Xvidcap", "Main", "Wicd-client.py", "com-mathworks-util-PostVMInit"]
-        myFloatCN       = ["ePSXe - Enhanced PSX emulator", "Seleccione Archivo", "Config Video", "Testing plugin", "Config Sound", "Config Cdrom", "Config Bios", "Config Netplay", "Config Memcards", "About ePSXe", "Config Controller", "Config Gamepads", "Select one or more files to open", "Add media", "Choose a file", "Open Image", "File Operation Progress", "Firefox Preferences", "Preferences", "Search Engines", "Set up sync", "Passwords and Exceptions", "Autofill Options", "Rename File", "Copying files", "Moving files", "File Properties", "Replace", ""]
+        myFloatCN       = ["ePSXe - Enhanced PSX emulator", "Seleccione Archivo", "Config Video", "Testing plugin", "Config Sound", "Config Cdrom", "Config Bios", "Config Netplay", "Config Memcards", "About ePSXe", "Config Controller", "Config Gamepads", "Select one or more files to open", "Add media", "Choose a file", "Open Image", "File Operation Progress", "Firefox Preferences", "Preferences", "Search Engines", "Set up sync", "Passwords and Exceptions", "Autofill Options", "Rename File", "Copying files", "Moving files", "File Properties", "Replace", "/home/nsl/kpdb.kdb", ""]
         myFloatSN       = ["Event Tester"]
         myFocusDC       = ["Event Tester", "Notify-osd"]
 
