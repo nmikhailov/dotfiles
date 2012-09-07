@@ -333,9 +333,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, xK_p), shellPrompt myXPConfig)
     , ((modMask, xK_F2), xmonadPrompt myXPConfig)                                              --Launch Xmonad prompt
     , ((modMask, xK_g), goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
-    , ((modMask, xK_F1), scratchPad)                                                    --Scratchpad
+    , ((modMask, xK_F1), scratchPad)                                                           --Scratchpad
     , ((modMask .|. shiftMask, xK_h), spawn "gksu halt")                                       --Halt
-    , ((mod1Mask, xK_F3), spawn "chromium")                                                    --Launch chromium
+    , ((modMask .|. shiftMask, xK_p), spawn "chromium --incognito")                            --Launch chromium
     , ((modMask, xK_c), kill)                                                                  --Close focused window
     , ((mod1Mask, xK_F4), kill)
     , ((modMask, xK_space), sendMessage NextLayout)                                            --Rotate through the available layout algorithms
@@ -376,19 +376,19 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask , xK_s), spawn "xscreensaver-command -lock")                                   --Lock screen
     , ((modMask .|. shiftMask, xK_q), io (exitWith ExitSuccess))                               --Quit xmonad
     , ((modMask, xK_q), restart "xmonad" True)                                                 --Restart xmonad
-  --  , ((modMask, xK_comma), toggleWS)                                                          --Toggle to the workspace displayed previously
+  --  , ((modMask, xK_comma), toggleWS)                                                        --Toggle to the workspace displayed previously
     , ((mod1Mask, xK_masculine), toggleOrView (myWorkspaces !! 0))                             --if ws != 0 then move to workspace 0, else move to latest ws I was
     , ((mod1Mask .|. controlMask, xK_Left),  prevWS)                                           --Move to previous Workspace
     , ((modMask, xK_Left), prevWS)
     , ((modMask, xK_Right), nextWS)                                                            --Move to next Workspace
     , ((mod1Mask .|. controlMask, xK_Right), nextWS)
-    , ((modMask, xK_Return), windows W.swapMaster)                                                -- Swap the focused window and the master window
+    , ((modMask, xK_Return), windows W.swapMaster)                                             -- Swap the focused window and the master window
 
     , ((modMask .|. shiftMask, xK_o), restart "~/.xmonad/bin/obtoxmd.hs" True)
-    , ((0, xF86XK_AudioMute), spawn "sh ~/.xmonad/bin/voldzen.sh t -d")                     --Mute/unmute volume
-    , ((0, xF86XK_AudioRaiseVolume), spawn "sh ~/.xmonad/bin/voldzen.sh + -d")              --Raise volume
+    , ((0, xF86XK_AudioMute), spawn "sh ~/.xmonad/bin/voldzen.sh t -d")                        --Mute/unmute volume
+    , ((0, xF86XK_AudioRaiseVolume), spawn "sh ~/.xmonad/bin/voldzen.sh + -d")                 --Raise volume
     , ((mod1Mask, xK_bracketright), spawn "sh ~/.xmonad/bin/voldzen.sh + -d")
-    , ((0, xF86XK_AudioLowerVolume), spawn "sh ~/.xmonad/bin/voldzen.sh - -d")              --Lower volume
+    , ((0, xF86XK_AudioLowerVolume), spawn "sh ~/.xmonad/bin/voldzen.sh - -d")                 --Lower volume
     , ((mod1Mask, xK_bracketleft), spawn "sh ~/.xmonad/bin/voldzen.sh - -d")
     , ((0, xF86XK_AudioNext), spawn "ncmpcpp next")                                            --next song
     , ((mod1Mask, xK_Right), spawn "ncmpcpp next")
@@ -398,8 +398,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((mod1Mask .|. controlMask, xK_Down), spawn "ncmpcpp toggle")
     , ((0, xF86XK_AudioStop), spawn "ncmpcpp stop")                                            --stop song
     , ((mod1Mask .|. controlMask, xK_Up), spawn "ncmpcpp stop")
-    , ((0, xF86XK_MonBrightnessUp), spawn "sh ~/.xmonad/bin/bridzen.sh")                    --Raise brightness
-    , ((0, xF86XK_MonBrightnessDown), spawn "sh ~/.xmonad/bin/bridzen.sh")                  --Lower brightness
+    , ((0, xF86XK_MonBrightnessUp), spawn "sh ~/.xmonad/bin/bridzen.sh")                       --Raise brightness
+    , ((0, xF86XK_MonBrightnessDown), spawn "sh ~/.xmonad/bin/bridzen.sh")                     --Lower brightness
     , ((0, xF86XK_ScreenSaver), spawn "xscreensaver-command -lock")                            --Lock screen
     , ((0, xK_Print), spawn "scrot '%Y-%m-%d_$wx$h.png'")                                      --Take a screenshot
     ]
