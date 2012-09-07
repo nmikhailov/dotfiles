@@ -157,7 +157,7 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 
 -- Workspaces
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["1:TERM", "2:WEBS", "3:CODE", "4:GRFX", "5:CHAT", "6:VIDS", "7:ETC", "8:ETC", "9:ETC"]
+myWorkspaces = ["1:TERM", "2:WEBS", "3:CODE", "4:CHAT", "5:GRFX", "6:VIDS", "7:ETC", "8:ETC", "9:ETC"]
 
 
 --------------------------------------------------------------------------------------------
@@ -190,8 +190,8 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
     $ mkToggle (single REFLECTY)
     $ onWorkspace (myWorkspaces !! 1) webLayouts  --Workspace 1 layouts
     $ onWorkspace (myWorkspaces !! 2) codeLayouts --Workspace 2 layouts
-    $ onWorkspace (myWorkspaces !! 3) gimpLayouts --Workspace 3 layouts
-    $ onWorkspace (myWorkspaces !! 4) chatLayouts --Workspace 4 layouts
+    $ onWorkspace (myWorkspaces !! 3) chatLayouts --Workspace 3 layouts
+    $ onWorkspace (myWorkspaces !! 4) gimpLayouts --Workspace 4 layouts
     $ allLayouts
     where
         allLayouts  = myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM
@@ -215,8 +215,8 @@ myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
     [ [resource     =? r     --> doIgnore                             | r <- myIgnores] --ignore desktop
     , [className    =? c     --> doShift (myWorkspaces !! 1)          | c <- myWebS   ] --move myWebS windows to workspace 1 by classname
-    , [className    =? c     --> doShift (myWorkspaces !! 4)          | c <- myChatS  ] --move myChatS windows to workspace 4 by classname
-    , [className    =? c     --> doShift (myWorkspaces !! 3)          | c <- myGfxS   ] --move myGfxS windows to workspace 4 by classname
+    , [className    =? c     --> doShift (myWorkspaces !! 3)          | c <- myChatS  ] --move myChatS windows to workspace 4 by classname
+    , [className    =? c     --> doShift (myWorkspaces !! 4)          | c <- myGfxS   ] --move myGfxS windows to workspace 4 by classname
 --    , [className    =? c     --> doShiftAndGo (myWorkspaces !! 5)     | c <- myGameS  ] --move myGameS windows to workspace 5 by classname and shift
     , [className    =? c     --> doShiftAndGo (myWorkspaces !! 8)     | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift
     , [className    =? c     --> doCenterFloat                        | c <- myFloatCC] --float center geometry by classname
