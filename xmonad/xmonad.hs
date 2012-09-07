@@ -67,9 +67,22 @@ main = do
         , handleEventHook    = fullscreenEventHook                                                  --needed for chromium full screen
         , keys               = myKeys
         , mouseBindings      = myMouseBindings
-        , startupHook        = setDefaultCursor xC_left_ptr >> setWMName "LG3D"
+        , startupHook        = startup
         }
 
+
+--------------------------------------------------------------------------------------------
+-- Startup                                                                                --
+--------------------------------------------------------------------------------------------
+startup :: X ()
+startup = do
+    setDefaultCursor xC_left_ptr >> setWMName "LG3D"
+
+    spawn "pidof firefox || firefox"
+    spawn "pidof pidgin || pidgin"
+    spawn "pidof deluged || deluged"
+    spawn "pidof keepassx || keepassx"
+    spawn "pidof dropboxd || dropboxd"
 
 --------------------------------------------------------------------------------------------
 -- APPEARANCE CONFIG                                                                      --

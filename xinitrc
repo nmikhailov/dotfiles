@@ -19,15 +19,6 @@ xfce)
     exec dbus-launch --exit-with-session startxfce4
     ;;
 xmonad)
-    xsetroot -cursor_name left_ptr
-
-    pactl load-module module-equalizer-sink&    # Fix me
-    pulseaudio --start &                        # Fix me
-
-    keepassx&
-    dropboxd&
-    deluged
-
     exec dbus-launch --exit-with-session xmonad
     ;;
 esac
