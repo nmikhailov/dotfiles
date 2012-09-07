@@ -383,6 +383,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, xK_Right), nextWS)                                                            --Move to next Workspace
     , ((mod1Mask .|. controlMask, xK_Right), nextWS)
     , ((modMask, xK_Return), windows W.swapMaster)                                             -- Swap the focused window and the master window
+    , ((modMask, xK_l), spawn "slimlock")                                                      -- Lock screen
 
     , ((modMask .|. shiftMask, xK_o), restart "~/.xmonad/bin/obtoxmd.hs" True)
     , ((0, xF86XK_AudioMute), spawn "sh ~/.xmonad/bin/voldzen.sh t -d")                        --Mute/unmute volume
