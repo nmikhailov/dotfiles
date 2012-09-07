@@ -5,7 +5,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/java/bin:/opt/java/db/bin:/opt/java/jre/bin:/usr/bin/core_perl
-PATH=~/.gem/ruby/1.9.1/bin/:~/.bin/:~/Scripts/:$PATH
+PATH=/usr/bin/vendor_perl:~/.gem/ruby/1.9.1/bin/:~/.bin/:~/Scripts/:$PATH
 export EDITOR='vim'
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 

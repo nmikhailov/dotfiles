@@ -46,14 +46,13 @@ URxvt.boldFont:xft:dejavu sans mono:medium:size=10.5
 
 ! -- Colours -- !
 #include "/home/nsl/.colours/dark"
-!#include "/home/nsl/.colours/light"
 !#include "/home/nsl/.colours/low"
 !#include "/home/nsl/.colours/old"
 !#include "/home/nsl/.colours/soft"
 !#include "/home/nsl/.colours/washed"
 !#include "/home/nsl/.colours/bright"
 !#include "/home/nsl/.colours/lich"
-!#include "/home/nsl/.colours/rab"
+!#include "/home/nsl/.colours/rab"      ok
 !#include "/home/nsl/.colours/reasons"
 !#include "/home/nsl/.colours/zenburn"
 
@@ -82,3 +81,6 @@ xterm*geometry: 120x28
 dzen2.font: droid sans mono slashed:medium:size=10
 dzen2.foreground: #899CA1
 dzen2.background: #121212
+URxvt.colorIT:      #87af5f
+URxvt.colorBD:      #d7d7d7
+URxvt.colorUL:      #87afd7

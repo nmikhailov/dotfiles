@@ -40,7 +40,7 @@ EXPORTDIR=""       # If empty, use makepkg's connfiguration (see makepkg.conf)
 NOCONFIRM=0
 UP_NOCONFIRM=0     # No prompt while build upgrades (including -Sbu)
 BUILD_NOCONFIRM=0  # Only prompt for editing files
-EDITFILES=1
+EDITFILES=0
 NOENTER=1
 
 # Output
