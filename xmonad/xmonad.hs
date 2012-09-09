@@ -334,7 +334,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, xK_F2), xmonadPrompt myXPConfig)                                              --Launch Xmonad prompt
     , ((modMask, xK_g), goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
     , ((modMask, xK_F1), scratchPad)                                                           --Scratchpad
-    , ((modMask .|. shiftMask, xK_h), spawn "gksu halt")                                       --Halt
     , ((modMask .|. shiftMask, xK_p), spawn "chromium --incognito")                            --Launch chromium
     , ((modMask, xK_c), kill)                                                                  --Close focused window
     , ((mod1Mask, xK_F4), kill)
@@ -373,7 +372,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, xK_comma), sendMessage (IncMasterN 1))                                        --Increment the number of windows in the master area
     , ((modMask, xK_period), sendMessage (IncMasterN (-1)))                                    --Deincrement the number of windows in the master area
     , ((modMask , xK_d), spawn "killall dzen2")                                                --Kill dzen2 and trayer
-    , ((modMask , xK_s), spawn "xscreensaver-command -lock")                                   --Lock screen
     , ((modMask .|. shiftMask, xK_q), io (exitWith ExitSuccess))                               --Quit xmonad
     , ((modMask, xK_q), restart "xmonad" True)                                                 --Restart xmonad
   --  , ((modMask, xK_comma), toggleWS)                                                        --Toggle to the workspace displayed previously
