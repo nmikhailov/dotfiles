@@ -30,6 +30,10 @@ orphans() {
     fi
 }
 
+mkcd() {
+    mkdir $1 && cd $1
+}
+
 # colour coreutils
 eval $(dircolors -b ~/.dir_colors)
 alias grep='grep --color=always'

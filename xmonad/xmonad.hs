@@ -236,7 +236,7 @@ myManageHook = (composeAll . concat $
 --        myGameS         = ["zsnes"]
         myOtherS        = ["Amule", "Transmission-gtk"]
         myFloatCC       = ["MPlayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock", "Desmume", "Ossxmix", "Xvidcap", "Main", "Wicd-client.py", "com-mathworks-util-PostVMInit"]
-        myFloatCN       = ["ePSXe - Enhanced PSX emulator", "Seleccione Archivo", "Config Video", "Testing plugin", "Config Sound", "Config Cdrom", "Config Bios", "Config Netplay", "Config Memcards", "About ePSXe", "Config Controller", "Config Gamepads", "Select one or more files to open", "Add media", "Choose a file", "Open Image", "File Operation Progress", "Firefox Preferences", "Preferences", "Search Engines", "Set up sync", "Passwords and Exceptions", "Autofill Options", "Rename File", "Copying files", "Moving files", "File Properties", "Replace", "/home/nsl/kpdb.kdb", ""]
+        myFloatCN       = ["ePSXe - Enhanced PSX emulator", "Seleccione Archivo", "Config Video", "Testing plugin", "Config Sound", "Config Cdrom", "Config Bios", "Config Netplay", "Config Memcards", "About ePSXe", "Config Controller", "Config Gamepads", "Select one or more files to open", "Add media", "Choose a file", "Open Image", "File Operation Progress", "Firefox Preferences", "Preferences", "Search Engines", "Set up sync", "Passwords and Exceptions", "Autofill Options", "Rename File", "Copying files", "Moving files", "File Properties", "Replace", "/home/nsl/kpdb.kdb", "GL_HW", ""]
         myFloatSN       = ["Event Tester"]
         myFocusDC       = ["Event Tester", "Notify-osd"]
 
@@ -381,7 +381,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, xK_Right), nextWS)                                                            --Move to next Workspace
     , ((mod1Mask .|. controlMask, xK_Right), nextWS)
     , ((modMask, xK_Return), windows W.swapMaster)                                             -- Swap the focused window and the master window
-    , ((modMask, xK_l), spawn "slimlock")                                                      -- Lock screen
+    , ((modMask .|. controlMask, xK_l), spawn "slimlock")                                                      -- Lock screen
 
     , ((modMask .|. shiftMask, xK_o), restart "~/.xmonad/bin/obtoxmd.hs" True)
     , ((0, xF86XK_AudioMute), spawn "sh ~/.xmonad/bin/voldzen.sh t -d")                        --Mute/unmute volume
