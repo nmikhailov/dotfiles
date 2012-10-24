@@ -83,6 +83,19 @@ printLanInfo() {
     fi
 }
 
+printVideoInfo() {
+    OnCount=$(cat /sys/kernel/debug/vgaswitcheroo/switch | grep "+" | wc -l)
+    VCard=$(cat /sys/kernel/debug/vgaswitcheroo/switch | grep "+" | sed -r "s/[0-9]+\://" | sed -r "s/\:.*//")
+
+    echo -n "^fg($DZEN_FG2)GPU "
+    if [[ $OnCount -ne 1 ]]; then
+        echo -n "^fg($CRIT)"
+    else
+        echo -n "^fg($BAR_FG)"
+    fi
+    echo -n "$VCard"
+}
+
 printSpace() {
     echo -n " ^fg($COLOR_SEP)|^fg() "
     return
@@ -90,6 +103,8 @@ printSpace() {
 
 printBottomBar() {
     while true; do
+        printVideoInfo
+        printSpace
         printDiskInfo
         printSpace
         printBattery
