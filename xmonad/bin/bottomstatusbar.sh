@@ -1,17 +1,15 @@
 #!/bin/bash
-# Author: nnoell <nnoell3@gmail.com>
-# Depends: dzen2-xft-xpm-xinerama-svn
-# Desc: dzen2 bar for XMonad, ran within xmonad.hs via spawnPipe
 
-#Layout
-BAR_H=9
-BIGBAR_W=65
-WIDTH=610
+# Get monitor width and height for proper Layout
+SCREEN_WIDTH=$(xrandr | grep -Po --color=never "(?<=\ connected )[\d]+(?=x[\d]+)")
+SCREEN_HEIGHT=$(xrandr | grep -Po --color=never "(?<=\ connected )[\d]+x[\d]+" | sed -r "s/[0-9]+x//")
+# Layout
 HEIGHT=16
-X_POS=900
-Y_POS=1022
+X_POS=700
+WIDTH=$(echo "$SCREEN_WIDTH - $X_POS" | bc)
+Y_POS=$(echo "$SCREEN_HEIGHT - $HEIGHT" | bc)
 
-#Colors and font
+# Colors and font
 FONT="-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
 DZEN_BG="#020202"
 DZEN_FG="#9d9d9d"
@@ -28,7 +26,7 @@ WIFISIGNAL=0
 printDiskInfo() {
     RFSP=$(df -h / | tail -1 | awk '{ print $5 }' | tr -d '%')
     HFSP=$(df -h /home | tail -1 | awk '{ print $5 }' | tr -d '%')
-    echo -n "^fg($DZEN_FG2) ROOT ^fg($BAR_FG)${RFSP}% "
+    echo -n "^fg($DZEN_FG2)ROOT ^fg($BAR_FG)${RFSP}% "
     echo -n "^fg($DZEN_FG2)HOME ^fg($BAR_FG)${HFSP}%"
     return
 }
@@ -66,7 +64,7 @@ printWifiInfo() {
     if [[ $WIFIDOWN -ne "1" ]]; then
         WIFISIGNAL=$(wicd-cli --wireless -d | grep Quality | awk '{print $2}')
 #        echo -n "$(echo $WIFISIGNAL | gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BIGBAR_W -s o -ss 1 -sw 2 -nonl) "
-        echo -n "^fg($BAR_FG)$WIFISIGNAL% "
+        echo -n "^fg($BAR_FG)$WIFISIGNAL%"
     else
         echo -n "^fg($CRIT)N/A "
     fi

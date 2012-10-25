@@ -1,17 +1,16 @@
 #!/bin/bash
-# Author: nnoell <nnoell3@gmail.com>
-# Depends: dzen2-xft-xpm-xinerama-svn && conky
-# Desc: dzen2 bar for XMonad, ran within xmonad.hs via spawnPipe
-
 #Layout
 BAR_H=9
 BIGBAR_W=65
 WIDTH_L=925
-WIDTH_R=556 #WIDTH_L + WIDTH_R = 1366
 HEIGHT=16
 X_POS_L=0
 X_POS_R=$WIDTH_L
 Y_POS=0
+# Get monitor width and height for proper Layout
+SCREEN_WIDTH=$(xrandr | grep -Po --color=never "(?<=\ connected )[\d]+(?=x[\d]+)")
+# Layout
+WIDTH_R=$(echo "$SCREEN_WIDTH - $WIDTH_L" | bc)
 
 #Colors and font
 CRIT="#99cc66"
