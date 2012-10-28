@@ -23,7 +23,7 @@ REPOS=()           # REPOS available at $SYNCSERVER
 SYNCSERVER=""
 
 # AUR
-AURURL="http://aur.archlinux.org"
+AURURL="https://aur.archlinux.org"
 AURCOMMENT=5
 AURDEVELONLY=0
 AURSEARCH=0
