@@ -82,7 +82,7 @@ printLanInfo() {
 }
 
 printVideoInfo() {
-    OnCount=$(cat /sys/kernel/debug/vgaswitcheroo/switch | grep -v -i "audio" | grep "+" | wc -l)
+    OnCount=$(cat /sys/kernel/debug/vgaswitcheroo/switch | grep -v -i "audio" | grep -ic "pwr")
     VCard=$(cat /sys/kernel/debug/vgaswitcheroo/switch | grep -v -i "audio" | grep "+" | sed -r "s/[0-9]+\://" | sed -r "s/\:.*//")
 
     echo -n "^fg($DZEN_FG2)GPU "

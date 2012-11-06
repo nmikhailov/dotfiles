@@ -1,8 +1,8 @@
 #!/bin/bash
 # Init numlockx
 internal=`xrandr | grep LVDS | sed -e "s/ .*//g"`
-external=`xrandr | grep HDMI | sed -e "s/ .*//g"`
-has_external=$(xrandr | grep HDMI | grep " connected" | wc -l)
+external=`xrandr | grep DFP | sed -e "s/ .*//g"`
+has_external=$(xrandr | grep DFP | grep " connected" | wc -l)
 #echo "Internal: "$internal
 #echo "External: "$external
 #echo "External2: "$has_external
