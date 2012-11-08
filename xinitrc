@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Load settings for urxvt and others
 xrdb -merge ~/.Xresources
 
 # Start a D-Bus session

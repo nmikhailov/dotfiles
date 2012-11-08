@@ -83,6 +83,7 @@ startup = do
     spawn "pidof deluged || deluged"
     spawn "pidof keepassx || keepassx"
     spawn "pidof dropboxd || dropboxd"
+    spawn "pidof skype || skype"
 
 --------------------------------------------------------------------------------------------
 -- APPEARANCE CONFIG                                                                      --
@@ -157,7 +158,7 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 
 -- Workspaces
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["1:TERM", "2:WEBS", "3:CODE", "4:CHAT", "5:GRFX", "6:VIDS", "7:ETC", "8:ETC", "9:ETC"]
+myWorkspaces = ["1:TERM", "2:WEBS", "3:CODE", "4:CHAT", "5", "6", "7", "8", "9", "10"]
 
 
 --------------------------------------------------------------------------------------------
@@ -191,7 +192,6 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
     $ onWorkspace (myWorkspaces !! 1) webLayouts  --Workspace 1 layouts
     $ onWorkspace (myWorkspaces !! 2) codeLayouts --Workspace 2 layouts
     $ onWorkspace (myWorkspaces !! 3) chatLayouts --Workspace 3 layouts
-    $ onWorkspace (myWorkspaces !! 4) gimpLayouts --Workspace 4 layouts
     $ allLayouts
     where
         allLayouts  = myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM
