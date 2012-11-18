@@ -19,7 +19,7 @@ case $1 in
 xfce)
     exec dbus-launch --exit-with-session startxfce4
     ;;
-xmonad)
+*)
     exec dbus-launch --exit-with-session xmonad
     ;;
 esac

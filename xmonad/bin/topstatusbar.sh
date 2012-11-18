@@ -22,39 +22,12 @@ DZEN_BG="#020202"
 COLOR_SEP=$DZEN_FG2
 FONT="-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
 
-#Conky
-CONKYFILE="${HOME}/.xmonad/conky/conkyrc"
-IFS='|'
-INTERVAL=1
-CPUTemp=0
-GPUTemp=0
-CPULoad0=0
-CPULoad1=0
-CPULoad2=0
-CPULoad3=0
-MpdInfo=0
-MpdRandom="Off"
-MpdRepeat="Off"
-
-#clickable areas
-VOL_TOGGLE_CMD="sh ${HOME}/bin/voldzen.sh t"
-VOL_UP_CMD="sh ${HOME}/bin/voldzen.sh +"
-VOL_DOWN_CMD="sh ${HOME}/bin/voldzen.sh -"
-DROP_START_CMD="dropbox start"
-DROP_STOP_CMD="dropbox stop"
-MPD_REP_CMD="mpc -h 127.0.0.1 repeat"
-MPD_RAND_CMD="mpc -h 127.0.0.1 random"
-MPD_TOGGLE_CMD="ncmpcpp toggle"
-MPD_STOP_CMD="ncmpcpp stop"
-MPD_NEXT_CMD="ncmpcpp next"
-MPD_PREV_CMD="ncmpcpp prev"
-CAL_CMD="sh ${HOME}/bin/dzencal.sh"
-
+INTERVAL=0.5
 
 printVolInfo() {
     Perc=$(amixer get Master | grep "Left:" | awk '{print $5}' | tr -d '[]%')
     Mute=$(amixer get Master | grep "Left:" | awk '{print $7}')
-    echo -n "^fg($DZEN_FG2) ^ca(1,$VOL_TOGGLE_CMD)^ca(4,$VOL_UP_CMD)^ca(5,$VOL_DOWN_CMD)VOL^ca()^ca()^ca() "
+    echo -n "^fg($DZEN_FG2) VOL "
     if [[ $Mute == "[off]" ]]; then
         echo -n "$(echo $Perc | gdbar -fg $CRIT -bg $BAR_BG -h $BAR_H -w $BIGBAR_W -s o -ss 1 -sw 2 -nonl) "
         echo -n "^fg()off"
@@ -66,11 +39,13 @@ printVolInfo() {
 }
 
 printCPUInfo() {
-#    [[ $CPULoad0 -gt 70 ]] && CPULoad0="^fg($CRIT)$CPULoad0^fg()"
-#    [[ $CPULoad1 -gt 70 ]] && CPULoad1="^fg($CRIT)$CPULoad1^fg()"
-#    [[ $CPULoad2 -gt 70 ]] && CPULoad2="^fg($CRIT)$CPULoad2^fg()"
-    [[ $CPULoad3 -gt 70 ]] && CPULoad3="^fg($CRIT)$CPULoad3^fg()"
-    echo -n " ^fg($DZEN_FG2)CPU ^fg($BAR_FG)${CPULoad3}%"
+    cpu="$(awk 'BEGIN{i=0}
+            {sum[i]=$2+$3+$4+$5; idle[i++]=$5}
+    END {printf "%03d\n", 100*( (sum[1]-sum[0]) - (idle[1]-idle[0]) ) / (sum[1]-sum[0])}
+    ' <( head -n 1 /proc/stat; sleep 0.5; head -n 1 /proc/stat))"
+
+    [[ $cpu -gt 70 ]] && cpu="^fg($CRIT)$cpu^fg()"
+    echo -n " ^fg($DZEN_FG2)CPU ^fg($BAR_FG)${cpu}%"
     return
 }
 
@@ -84,8 +59,10 @@ printTempInfo() {
 }
 
 printMemInfo() {
-    [[ $MemPerc -gt 70 ]] && CPUTemp="^fg($CRIT)$MemPerc^fg()"
-    echo -n "^fg($DZEN_FG2)MEM ^fg($BAR_FG)${MemPerc}%"
+    mem="$(awk '/^-/ {print $3}' <(free -m))"
+
+    [[ $mem -gt 70 ]] && mem="^fg($CRIT)$mem^fg()"
+    echo -n "^fg($DZEN_FG2)MEM ^fg($BAR_FG)${mem}%"
     return
 }
 
@@ -95,20 +72,6 @@ printDropBoxInfo() {
         echo -n "^fg($DZEN_FG2)^ca(1,$DROP_START_CMD)DROPBOX^ca() ^fg()Off"
     else
         echo -n "^fg($DZEN_FG2)^ca(1,$DROP_STOP_CMD)DROPBOX^ca() ^fg($CRIT)On"
-    fi
-    return
-}
-
-printMpdInfo() {
-    MPDON=$(ps -A | grep -c mpd)
-    if [[ $MPDON == "0" ]]; then
-        echo -n "^fg($DZEN_FG2)^ca(1,mpd)MPD^ca() ^fg()Off"
-    else
-        [[ $MpdRepeat == "On" ]] && MpdRepeat="^fg($CRIT)$MpdRepeat^fg()"
-        [[ $MpdRandom == "On" ]] && MpdRandom="^fg($CRIT)$MpdRandom^fg()"
-        #echo -n "^fg($DZEN_FG2)^ca(1,$MPD_REP_CMD)REPEAT^ca() ^fg()$MpdRepeat "
-        #echo -n "^fg($DZEN_FG2)| ^ca(1,$MPD_RAND_CMD)RANDOM^ca() ^fg()$MpdRandom "
-        echo -n "^ca(1,$MPD_TOGGLE_CMD)^ca(3,$MPD_STOP_CMD)^ca(4,$MPD_NEXT_CMD)^ca(5,$MPD_PREV_CMD)MPD^ca()^ca()^ca()^ca() $MpdInfo"
     fi
     return
 }
@@ -125,21 +88,18 @@ printSpace() {
 
 printLeft() {
     while true; do
-        read CPULoad3 CPUFreq MemUsed MemPerc MpdInfo MpdRandom MpdRepeat
         printVolInfo
         printSpace
         printDropBoxInfo
-        printSpace
-        printMpdInfo
         echo -n " ^fg()>^fg($BAR_FG)>^fg($DZEN_FG2)>"
         echo
+        sleep $INTERVAL
     done
     return
 }
 
 printRight() {
     while true; do
-        read CPULoad3 CPUFreq MemUsed MemPerc MpdInfo MpdRandom MpdRepeat
         printCPUInfo
         printSpace
         printMemInfo
@@ -148,10 +108,11 @@ printRight() {
         printSpace
         printDateInfo
         echo
+        sleep $INTERVAL
     done
     return
 }
 
 #Print all and pipe into dzen
-conky -c $CONKYFILE -u $INTERVAL | printLeft | dzen2 -x $X_POS_L -y $Y_POS -w $WIDTH_L -h $HEIGHT -fn $FONT -ta 'l' -bg $DZEN_BG -fg $DZEN_FG -p -e '' &
-conky -c $CONKYFILE -u $INTERVAL | printRight | dzen2 -x $X_POS_R -y $Y_POS -w $WIDTH_R -h $HEIGHT -fn $FONT -ta 'r' -bg $DZEN_BG -fg $DZEN_FG -p -e ''
+printLeft | dzen2 -x $X_POS_L -y $Y_POS -w $WIDTH_L -h $HEIGHT -fn $FONT -ta 'l' -bg $DZEN_BG -fg $DZEN_FG -p -e '' &
+printRight | dzen2 -x $X_POS_R -y $Y_POS -w $WIDTH_R -h $HEIGHT -fn $FONT -ta 'r' -bg $DZEN_BG -fg $DZEN_FG -p -e ''
