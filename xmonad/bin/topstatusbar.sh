@@ -1,26 +1,9 @@
 #!/bin/bash
-#Layout
-BAR_H=9
-BIGBAR_W=65
-WIDTH_L=825
-HEIGHT=16
-X_POS_L=0
-X_POS_R=$WIDTH_L
-Y_POS=0
-# Get monitor width and height for proper Layout
-SCREEN_WIDTH=$(xrandr | grep -Po --color=never "(?<=\ connected )[\d]+(?=x[\d]+)")
-# Layout
-WIDTH_R=$(echo "$SCREEN_WIDTH - $WIDTH_L" | bc)
 
-#Colors and font
-CRIT="#99cc66"
-BAR_FG="#3955c4"
-BAR_BG="#363636"
-DZEN_FG="#9d9d9d"
-DZEN_FG2="#444444"
-DZEN_BG="#020202"
-COLOR_SEP=$DZEN_FG2
-FONT="-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
+source ~/.xmonad/bin/settings.sh
+
+# Layout
+WIDTH_R=$(echo "$SCREEN_WIDTH - $TOP_LEFT_WIDTH" | bc)
 
 INTERVAL=0.5
 
@@ -41,7 +24,7 @@ printVolInfo() {
 printCPUInfo() {
     cpu="$(awk 'BEGIN{i=0}
             {sum[i]=$2+$3+$4+$5; idle[i++]=$5}
-    END {printf "%03d\n", 100*( (sum[1]-sum[0]) - (idle[1]-idle[0]) ) / (sum[1]-sum[0])}
+    END {printf "% 3d\n", 100*( (sum[1]-sum[0]) - (idle[1]-idle[0]) ) / (sum[1]-sum[0])}
     ' <( head -n 1 /proc/stat; sleep 0.5; head -n 1 /proc/stat))"
 
     [[ $cpu -gt 70 ]] && cpu="^fg($CRIT)$cpu^fg()"
@@ -114,5 +97,5 @@ printRight() {
 }
 
 #Print all and pipe into dzen
-printLeft | dzen2 -x $X_POS_L -y $Y_POS -w $WIDTH_L -h $HEIGHT -fn $FONT -ta 'l' -bg $DZEN_BG -fg $DZEN_FG -p -e '' &
-printRight | dzen2 -x $X_POS_R -y $Y_POS -w $WIDTH_R -h $HEIGHT -fn $FONT -ta 'r' -bg $DZEN_BG -fg $DZEN_FG -p -e ''
+printLeft | dzen2 -x 0 -y 0 -w $TOP_LEFT_WIDTH -h $HEIGHT -fn $FONT -ta 'l' -bg $DZEN_BG -fg $DZEN_FG -p -e '' &
+printRight | dzen2 -x $TOP_LEFT_WIDTH -y 0 -w $WIDTH_R -h $HEIGHT -fn $FONT -ta 'r' -bg $DZEN_BG -fg $DZEN_FG -p -e ''

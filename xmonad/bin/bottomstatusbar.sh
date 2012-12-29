@@ -1,24 +1,8 @@
 #!/bin/bash
-
-# Get monitor width and height for proper Layout
-SCREEN_WIDTH=$(xrandr | grep -Po --color=never "(?<=\ connected )[\d]+(?=x[\d]+)")
-SCREEN_HEIGHT=$(xrandr | grep -Po --color=never "(?<=\ connected )[\d]+x[\d]+" | sed -r "s/[0-9]+x//")
+source ~/.xmonad/bin/settings.sh
 # Layout
-HEIGHT=16
-X_POS=700
-WIDTH=$(echo "$SCREEN_WIDTH - $X_POS" | bc)
+WIDTH=$(echo "$SCREEN_WIDTH - $BOTTOM_LEFT_WIDTH" | bc)
 Y_POS=$(echo "$SCREEN_HEIGHT - $HEIGHT" | bc)
-
-# Colors and font
-FONT="-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
-DZEN_BG="#020202"
-DZEN_FG="#9d9d9d"
-DZEN_FG2="#444444"
-#DZEN_BG="#440000"
-CRIT="#99cc66"
-BAR_FG="#3955c4"
-BAR_BG="#363636"
-COLOR_SEP=$DZEN_FG2
 
 #Options
 INTERVAL=5
@@ -120,5 +104,4 @@ printBottomBar() {
 }
 
 #Print all and pipe into dzen2
-printBottomBar | dzen2 -x $X_POS -y $Y_POS -w $WIDTH -h $HEIGHT -fn $FONT -ta 'r' -bg $DZEN_BG -fg $DZEN_FG -p -e ''
-#tray
+printBottomBar | dzen2 -x $BOTTOM_LEFT_WIDTH -y $Y_POS -w $WIDTH -h $HEIGHT -fn $FONT -ta 'r' -bg $DZEN_BG -fg $DZEN_FG -p -e ''

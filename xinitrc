@@ -20,6 +20,7 @@ xfce)
     exec dbus-launch --exit-with-session startxfce4
     ;;
 *)
+    pulseaudio --start &
     exec dbus-launch --exit-with-session xmonad
     ;;
 esac

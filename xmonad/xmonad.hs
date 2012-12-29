@@ -2,49 +2,50 @@
 {-# LANGUAGE DeriveDataTypeable, NoMonomorphismRestriction, TypeSynonymInstances, MultiParamTypeClasses #-}
 
 -- Imported libraries
-import XMonad
-import XMonad.Core
-import XMonad.Layout
-import XMonad.Layout.IM
-import XMonad.Layout.Gaps
-import XMonad.Layout.Named
-import XMonad.Layout.Tabbed
-import XMonad.Layout.OneBig
-import XMonad.Layout.Master
-import XMonad.Layout.Reflect
-import XMonad.Layout.MosaicAlt
-import XMonad.Layout.NoBorders (noBorders,smartBorders,withBorder)
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.MultiToggle
-import XMonad.Layout.MultiToggle.Instances
-import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.Minimize
-import XMonad.StackSet (RationalRect (..), currentTag)
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks (avoidStruts,avoidStrutsOn,manageDocks)
-import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.SetWMName
-import XMonad.Prompt
-import XMonad.Prompt.Shell
-import XMonad.Prompt.XMonad
-import XMonad.Util.Replace
-import XMonad.Util.Cursor
-import XMonad.Util.Run (spawnPipe)
-import XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionCustom)
-import XMonad.Util.NamedScratchpad
-import XMonad.Actions.CycleWS (nextWS, prevWS, toggleWS, toggleOrView)
-import XMonad.Actions.GridSelect
-import XMonad.Actions.FloatKeys
-import Data.Monoid
 import Data.List
+import Data.Monoid
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit
 import System.IO (Handle, hPutStrLn)
-import qualified XMonad.StackSet as W
+import XMonad
+import XMonad.Actions.CycleWS (nextWS, prevWS, toggleWS, toggleOrView)
+import XMonad.Actions.FloatKeys
+import XMonad.Actions.GridSelect
+import XMonad.Core
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ICCCMFocus
+import XMonad.Hooks.ManageDocks (avoidStruts,avoidStrutsOn,manageDocks)
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.UrgencyHook
+import XMonad.Layout
+import XMonad.Layout.Gaps
+import XMonad.Layout.IM
+import XMonad.Layout.Master
+import XMonad.Layout.Minimize
+import XMonad.Layout.MosaicAlt
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
+import XMonad.Layout.Named
+import XMonad.Layout.NoBorders (noBorders,smartBorders,withBorder)
+import XMonad.Layout.OneBig
+import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.Reflect
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Tabbed
+import XMonad.Prompt
+import XMonad.Prompt.Shell
+import XMonad.Prompt.XMonad
+import XMonad.StackSet (RationalRect (..), currentTag)
+import XMonad.Util.Cursor
+import XMonad.Util.NamedScratchpad
+import XMonad.Util.Replace
+import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionCustom)
 import qualified Data.Map as M
 import qualified XMonad.Actions.FlexibleResize as Flex
+import qualified XMonad.StackSet as W
 
 -- Main
 main :: IO ()
@@ -64,6 +65,7 @@ main = do
         , workspaces         = myWorkspaces
         , manageHook         = manageDocks <+> myManageHook
         , logHook            = (myLogHook workspaceBar) <+> ewmhDesktopsLogHook >> setWMName "LG3D" --ewmh needed so that chromium gain focus
+--        , logHook            = takeTopFocus
         , handleEventHook    = fullscreenEventHook                                                  --needed for chromium full screen
         , keys               = myKeys
         , mouseBindings      = myMouseBindings
@@ -246,7 +248,7 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook
 
 -- StatusBars
 myWorkspaceBar, myBottomStatusBar, myTopStatusBar :: String
-myWorkspaceBar    = "dzen2 -x '0' -y '1022' -h '16' -w '700' -ta 'l' -fg '" ++ colorWhiteAlt ++ "' -bg '" ++ colorBlack ++ "' -fn '" ++ dzenFont ++ "' -p -e ''"
+myWorkspaceBar    = "~/.xmonad/bin/bottomleft.sh"
 myBottomStatusBar = "~/.xmonad/bin/bottomstatusbar.sh"
 myTopStatusBar    = "~/.xmonad/bin/topstatusbar.sh"
 
@@ -395,7 +397,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((0, xF86XK_MonBrightnessUp), spawn "sh ~/.xmonad/bin/bridzen.sh")                       --Raise brightness
     , ((0, xF86XK_MonBrightnessDown), spawn "sh ~/.xmonad/bin/bridzen.sh")                     --Lower brightness
     , ((0, xF86XK_ScreenSaver), spawn "xscreensaver-command -lock")                            --Lock screen
-    , ((0, xK_Print), spawn "scrot '%Y-%m-%d_$wx$h.png'")                                      --Take a screenshot
+    , ((0, xK_Print), spawn "scrot '%Y-%m-%d_$wx$h %s.png'")                                      --Take a screenshot
     ]
     ++
     [((m .|. modMask, k), windows $ f i)                                                       --Switch to n workspaces and send client to n workspaces
