@@ -209,7 +209,7 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 
 -- Scratchpad (W+º)
 manageScratchPad :: ManageHook
-manageScratchPad = scratchpadManageHook (W.RationalRect (0) (1/50) (1) (5/9))
+manageScratchPad = scratchpadManageHook (W.RationalRect (0) (1/50) (1) (1/5))
 scratchPad = scratchpadSpawnActionCustom "urxvt -name scratchpad -e tmux"
 
 -- Manage hook
@@ -232,8 +232,8 @@ myManageHook = (composeAll . concat $
         myIgnores       = ["desktop","desktop_window"]
         myWebS          = ["Chromium","Firefox", "Opera", "Vimprobable2"]
         myChatS         = ["Pidgin", "Xchat", "Skype"]
-        myFloatCC       = ["MPlayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock", "Desmume", "Ossxmix", "Xvidcap", "Main", "Wicd-client.py", "com-mathworks-util-PostVMInit"]
-        myFloatCN       = ["ePSXe - Enhanced PSX emulator", "Seleccione Archivo", "Config Video", "Testing plugin", "Config Sound", "Config Cdrom", "Config Bios", "Config Netplay", "Config Memcards", "About ePSXe", "Config Controller", "Config Gamepads", "Select one or more files to open", "Add media", "Choose a file", "Open Image", "File Operation Progress", "Firefox Preferences", "Preferences", "Search Engines", "Set up sync", "Passwords and Exceptions", "Autofill Options", "Rename File", "Copying files", "Moving files", "File Properties", "Replace", "/home/nsl/kpdb.kdb", "GL_HW", ""]
+        myFloatCC       = ["Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Main", "com-mathworks-util-PostVMInit"]
+        myFloatCN       = ["Select one or more files to open", "Add media", "Choose a file", "Open Image", "File Operation Progress", "Firefox Preferences", "Preferences", "Search Engines", "Set up sync", "Passwords and Exceptions", "Autofill Options", "Rename File", "Copying files", "Moving files", "File Properties", "Replace", "/home/nsl/kpdb.kdb", "GL_HW", ""]
         myFloatSN       = ["Event Tester"]
         myFocusDC       = ["Event Tester", "Notify-osd"]
 
@@ -262,12 +262,12 @@ myLogHook h = dynamicLogWithPP $ defaultPP
     , ppSep             = "^fg(" ++ colorGray ++ ")|"
     , ppWsSep           = ""
     , ppCurrent         = dzenColor colorBlue     colorBlack . pad
-    , ppUrgent          = dzenColor colorGreen    colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
-    , ppVisible         = dzenColor colorGray     colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
-    , ppHidden          = dzenColor colorWhiteAlt colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
-    , ppHiddenNoWindows = dzenColor colorGray     colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
-    , ppLayout          = dzenColor colorBlue     colorBlack . pad . wrapClickLayout . layoutText
-    , ppTitle           = dzenColor colorWhiteAlt colorBlack . pad . wrapClickTitle . titleText . dzenEscape
+    , ppUrgent          = dzenColor colorGreen    colorBlack . pad
+    , ppVisible         = dzenColor colorGray     colorBlack . pad
+    , ppHidden          = dzenColor colorWhiteAlt colorBlack . pad
+    , ppHiddenNoWindows = dzenColor colorGray     colorBlack . pad
+    , ppLayout          = dzenColor colorBlue     colorBlack . pad . layoutText
+    , ppTitle           = dzenColor colorWhiteAlt colorBlack . pad . titleText . dzenEscape
     }
     where
         --display config
@@ -307,15 +307,6 @@ myLogHook h = dynamicLogWithPP $ defaultPP
         layoutText "Minimize ReflectX ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
         layoutText "Minimize ReflectX ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
         layoutText x = "^fg(" ++ colorGreen ++ ")" ++ x ++ "^fg()"
-        --clickable config
-        wrapClickLayout content = "^ca(1,xdotool key super+space)" ++ content ++ "^ca()"                                                           --clickable layout
-        wrapClickTitle content = "^ca(1,xdotool key super+j)" ++ content ++ "^ca()"                                                                --clickable title
-        wrapClickWorkSpace (idx,str) = "^ca(1," ++ xdo "w;" ++ xdo index ++ ")" ++ "^ca(3," ++ xdo "e;" ++ xdo index ++ ")" ++ str ++ "^ca()^ca()" --clickable workspaces
-            where
-                wsIdxToString Nothing = "1"
-                wsIdxToString (Just n) = show (n+1)
-                index = wsIdxToString (elemIndex idx myWorkspaces)
-                xdo key = "xdotool key super+" ++ key
 
 
 --------------------------------------------------------------------------------------------
@@ -370,7 +361,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask, xK_period), sendMessage (IncMasterN (-1)))                                    --Deincrement the number of windows in the master area
     , ((modMask , xK_d), spawn "killall dzen2")                                                --Kill dzen2 and trayer
     , ((modMask .|. shiftMask, xK_q), io (exitWith ExitSuccess))                               --Quit xmonad
-    , ((modMask, xK_q), restart "xmonad" True)                                                 --Restart xmonad
+    , ((modMask, xK_q), spawn "killall dzen2" >> restart "xmonad" True)                        --Restart xmonad
   --  , ((modMask, xK_comma), toggleWS)                                                        --Toggle to the workspace displayed previously
     , ((mod1Mask, xK_masculine), toggleOrView (myWorkspaces !! 0))                             --if ws != 0 then move to workspace 0, else move to latest ws I was
     , ((mod1Mask .|. controlMask, xK_Left),  prevWS)                                           --Move to previous Workspace
