@@ -1,6 +1,7 @@
 xmonad/*
 scripts/*
 vim/tmp
+vim/.netrwhist
 ncmpcpp/error.log
 
 *.swp
