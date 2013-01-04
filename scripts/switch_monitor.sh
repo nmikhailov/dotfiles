@@ -2,7 +2,9 @@
 
 internal=`xrandr | grep LVDS | sed -e "s/ .*//g"`
 externals=('HDMI'   # xf86-video-radeon
-           'DFP')   # catalyst
+           'DFP'   # catalyst
+           'VGA'
+           )
 
 for name in "${externals[@]}"
 do

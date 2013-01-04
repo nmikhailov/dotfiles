@@ -19,8 +19,15 @@ case $1 in
 xfce)
     exec dbus-launch --exit-with-session startxfce4
     ;;
-*)
+xmonad)
     pulseaudio --start &
+    xcompmgr &
     exec dbus-launch --exit-with-session xmonad
+    ;;
+dwm)
+    exec dbus-launch --exit-with-session dwm
+    ;;
+awesome)
+    exec dbus-launch --exit-with-session awesome
     ;;
 esac
