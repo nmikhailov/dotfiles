@@ -61,7 +61,7 @@ URxvt.perl-ext-common: default,matcher,keyboard-select,url-select,clipboard
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
 URxvt.keysym.M-s: perl:keyboard-select:search
-URxvt.urlLauncher: /home/nsl/Scripts/vimprobtab.sh
+URxvt.urlLauncher: firefox
 URxvt.matcher.button: 1
 URxvt.matcher.rend.0: -Uline fg16 
 URxvt.keysym.M-c:   perl:clipboard:copy

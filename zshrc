@@ -16,11 +16,22 @@ alias svim='sudo vim'
 alias systemctl='sudo systemctl'
 alias ssh_term="TERM=linux ssh"
 
+# Directory aliases
+hash -d study=~/Study/s07/
+hash -d repos=~/Repositories/
+
+
 unsetopt correctall
 zstyle ':completion:*:processes' command 'ps xua'
 zstyle ':completion:*:processes' sort true
 zstyle ':completion:*:processes-names' command 'ps xho command'
 
+# Alt-S insert_sudo
+insert_sudo () { zle beginning-of-line; zle -U "sudo " }
+zle -N insert-sudo insert_sudo
+bindkey "^[s" insert-sudo
+
+# Orphaned packages
 
 orphans() {
     if [[ ! -n $(pacman -Qdt) ]]; then
@@ -31,7 +42,7 @@ orphans() {
 }
 
 mkcd() {
-    mkdir $1 && cd $1
+    mkdir -p $1 && cd $1
 }
 
 # colour coreutils
