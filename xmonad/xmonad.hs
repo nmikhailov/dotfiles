@@ -249,7 +249,7 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook
 -- StatusBars
 myWorkspaceBar, myBottomStatusBar, myTopStatusBar :: String
 myWorkspaceBar    = "~/.xmonad/bin/bottomleft.sh"
-myBottomStatusBar = "~/.xmonad/bin/bottomstatusbar.sh"
+myBottomStatusBar = "~/.xmonad/bin/bottomright.sh"
 myTopStatusBar    = "~/.xmonad/bin/topstatusbar.sh"
 
 -- myWorkspaceBar config

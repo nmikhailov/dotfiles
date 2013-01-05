@@ -67,16 +67,26 @@ printLanInfo() {
 }
 
 printVideoInfo() {
-    OnCount=$(cat /sys/kernel/debug/vgaswitcheroo/switch | grep -v -i "audio" | grep -ic "pwr")
-    VCard=$(cat /sys/kernel/debug/vgaswitcheroo/switch | grep -v -i "audio" | grep "+" | sed -r "s/[0-9]+\://" | sed -r "s/\:.*//")
+    VgaSwitcheroo="/sys/kernel/debug/vgaswitcheroo/switch"
 
     echo -n "^fg($DZEN_FG2)GPU "
-    if [[ $OnCount -ne 1 ]]; then
-        echo -n "^fg($CRIT)"
+
+    if [ -e $VgaSwitcheroo ]
+    then
+        Val=$(cat $VgaSwitcheroo | grep -v -i "audio")
+
+        OnCount=$(echo $Val | grep -ic "pwr")
+        VCard=$(echo $Val | grep "+" | sed -r "s/[0-9]+\://" | sed -r "s/\:.*//")
+
+        if [[ $OnCount -ne 1 ]]; then
+            echo -n "^fg($CRIT)"
+        else
+            echo -n "^fg($BAR_FG)"
+        fi
+        echo -n "$VCard"
     else
-        echo -n "^fg($BAR_FG)"
+        echo -n "^fg($BAR_FG)CAT"
     fi
-    echo -n "$VCard"
 }
 
 printSpace() {

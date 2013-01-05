@@ -33,40 +33,18 @@ URxvt*tintColor: #080808
 URxvt*shading: 0
 
 ! -- Fonts -- !
-!URxvt.font:xft:droid sans mono slashed:size=10.5
-!URxvt.boldFont:xft:droid sans mono slashed:size=10.5
-!URxvt.font: xft:Luxi Mono:regular:size=10.5
-!URxvt.boldFont: xft:Luxi Mono:regular:size=10.5
-!URxvt.font:xft:envy code r:medium:size=11
-!URxvt.boldFont:xft:envy code r:medium:size=11
-!URxvt.font:xft:inconsolata:medium:size=12.5
-!URxvt.boldFont:xft:inconsolata:medium:size=12.5
 URxvt.font:xft:dejavu sans mono:medium:size=10.5
 URxvt.boldFont:xft:dejavu sans mono:medium:size=10.5
 
 ! -- Colours -- !
 #include "/home/nsl/.colours/dark"
-!#include "/home/nsl/.colours/low"
-!#include "/home/nsl/.colours/old"
-!#include "/home/nsl/.colours/soft"
-!#include "/home/nsl/.colours/washed"
-!#include "/home/nsl/.colours/bright"
-!#include "/home/nsl/.colours/lich"
-!#include "/home/nsl/.colours/rab"      ok
-!#include "/home/nsl/.colours/reasons"
-!#include "/home/nsl/.colours/zenburn"
 
 ! --  Extensions -- !
-URxvt.perl-ext-common: default,matcher,keyboard-select,url-select,clipboard
-URxvt.keysym.M-u: perl:url-select:select_next
-URxvt.keysym.M-Escape: perl:keyboard-select:activate
-URxvt.keysym.M-s: perl:keyboard-select:search
-URxvt.urlLauncher: firefox
-URxvt.matcher.button: 1
-URxvt.matcher.rend.0: -Uline fg16 
-URxvt.keysym.M-c:   perl:clipboard:copy
-URxvt.keysym.M-v:   perl:clipboard:paste
-URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+URxvt.perl-ext:
+URxvt.perl-ext-common:
+
+URxvt.iso14755_52: false
+URxvt.iso14755: false
 
 ! -- Xterm settings -- !
 xterm*toolBar: false

@@ -14,7 +14,7 @@ alias cd..='cd ..'
 alias xclip='xclip -selection clipboard'
 alias svim='sudo vim'
 alias systemctl='sudo systemctl'
-alias ssh_term="TERM=linux ssh"
+alias ssh-term="TERM=linux ssh"
 
 # Directory aliases
 hash -d study=~/Study/s07/
@@ -27,7 +27,10 @@ zstyle ':completion:*:processes' sort true
 zstyle ':completion:*:processes-names' command 'ps xho command'
 
 # Alt-S insert_sudo
-insert_sudo () { zle beginning-of-line; zle -U "sudo " }
+insert_sudo () {
+    zle beginning-of-line;
+    zle -U "sudo "
+}
 zle -N insert-sudo insert_sudo
 bindkey "^[s" insert-sudo
 
