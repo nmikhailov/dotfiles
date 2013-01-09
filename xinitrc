@@ -21,7 +21,7 @@ xfce)
     ;;
 xmonad)
     pulseaudio --start &
-    xcompmgr &
+#    xcompmgr &
     exec dbus-launch --exit-with-session xmonad
     ;;
 dwm)

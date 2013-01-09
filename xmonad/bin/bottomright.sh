@@ -13,7 +13,6 @@ printDiskInfo() {
     HFSP=$(df -h /home | tail -1 | awk '{ print $5 }' | tr -d '%')
     echo -n "^fg($DZEN_FG2)ROOT ^fg($BAR_FG)${RFSP}% "
     echo -n "^fg($DZEN_FG2)HOME ^fg($BAR_FG)${HFSP}%"
-    return
 }
 
 printBattery() {
@@ -31,14 +30,12 @@ printBattery() {
             echo -n " ^fg($CRIT)$RPERC%"
        fi
     fi
-    return
 }
 
 printBrightnessInfo() {
     BRIFILE=$(cat /sys/class/backlight/acpi_video0/actual_brightness)
     Bri=$(expr $BRIFILE \* 10)
     echo -n "^fg($DZEN_FG2)BRI ^fg($BAR_FG)${Bri}%"
-    return
 }
 
 printWifiInfo() {
@@ -53,7 +50,6 @@ printWifiInfo() {
     else
         echo -n "^fg($CRIT)N/A "
     fi
-    return
 }
 
 printLanInfo() {
@@ -73,10 +69,10 @@ printVideoInfo() {
 
     if [ -e $VgaSwitcheroo ]
     then
-        Val=$(cat $VgaSwitcheroo | grep -v -i "audio")
+        Val=$(cat "$VgaSwitcheroo" | grep -v -i "audio")
 
-        OnCount=$(echo $Val | grep -ic "pwr")
-        VCard=$(echo $Val | grep "+" | sed -r "s/[0-9]+\://" | sed -r "s/\:.*//")
+        OnCount=$(echo "$Val" | grep -ic "pwr")
+        VCard=$(echo "$Val" | grep "+" | sed -r "s/[0-9]+\://" | sed -r "s/\:.*//")
 
         if [[ $OnCount -ne 1 ]]; then
             echo -n "^fg($CRIT)"
@@ -91,7 +87,6 @@ printVideoInfo() {
 
 printSpace() {
     echo -n " ^fg($COLOR_SEP)|^fg() "
-    return
 }
 
 printBottomBar() {

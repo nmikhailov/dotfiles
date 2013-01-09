@@ -80,6 +80,8 @@ startup :: X ()
 startup = do
     setDefaultCursor xC_left_ptr >> setWMName "LG3D"
 
+    spawn "pidof udiskie || udiskie"
+    spawn "pidof xcompmgr || xcompmgr"
     spawn "pidof firefox || firefox"
     spawn "pidof pidgin || pidgin"
     spawn "pidof deluged || deluged"
