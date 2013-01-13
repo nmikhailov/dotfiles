@@ -104,11 +104,11 @@ colorWhite           = "#a9a6af" --Foreground (Shell_FG)
 colorWhiteAlt        = "#9d9d9d" --White dark (Dzen_FG)
 colorMagenta         = "#8e82a2"
 colorBlue            = "#3955c4"
-colorRed             = "#d74b73"
+colorRed             = "#d74b43"
 colorGreen           = "#99cc66"
 myArrow              = "^fg(" ++ colorWhiteAlt ++ ")>^fg(" ++ colorBlue ++ ")>^fg(" ++ colorGray ++ ")>"
 myNormalBorderColor  = colorBlackAlt
-myFocusedBorderColor = colorGray
+myFocusedBorderColor = colorRed
 
 -- Tab theme
 myTabTheme :: Theme

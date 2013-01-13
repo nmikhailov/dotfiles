@@ -48,6 +48,10 @@ mkcd() {
     mkdir -p $1 && cd $1
 }
 
+cdtmp() {
+    cd $(mktemp -d)
+}
+
 # colour coreutils
 eval $(dircolors -b ~/.dir_colors)
 alias grep='grep --color=always'
