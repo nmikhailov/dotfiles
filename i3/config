@@ -42,12 +42,6 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
@@ -163,8 +157,8 @@ bar {
 
 # Custom hotkeys
 bindsym $mod+Shift+p exec firefox -private-window
-bindsym Mod1+Left workspace prev
-bindsym Mod1+Right workspace next
+bindsym $mod+Left workspace prev
+bindsym $mod+Right workspace next
 
 # Scratchpads
 # starting a specially named term automatically 
@@ -172,6 +166,11 @@ exec --no-startup-id urxvt -name scratchpad -e tmux
 # move this to scratchpad, if active
 for_window [class="URxvt" instance="scratchpad"] move scratchpad
 bindsym $mod+F1 scratchpad show, move position 0px 0px
+
+# Filters
+assign [class="Firefox"] $wsWeb
+assign [class="Pidgin"] $wsChat
+assign [class="Skype"] $wsChat
 
 # Exec on start
 exec keepassx
