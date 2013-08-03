@@ -1,4 +1,4 @@
-let g:pymode_version = "0.6.3"
+let g:pymode_version = "0.6.9"
 
 com! PymodeVersion echomsg "Current python-mode version: " . g:pymode_version
 
@@ -36,6 +36,9 @@ endif
 
 " DESC: Fix python path
 if !pymode#Default('g:pymode_path', 1) || g:pymode_path
+
+    call pymode#Default('g:pymode_paths', [])
+
 python << EOF
 import sys, vim, os
 
@@ -43,8 +46,9 @@ curpath = vim.eval("getcwd()")
 libpath = os.path.join(os.path.dirname(os.path.dirname(
     vim.eval("expand('<sfile>:p')"))), 'pylibs')
 
-sys.path = [libpath, curpath] + sys.path
+sys.path = [os.path.dirname(libpath), libpath, curpath] + vim.eval("g:pymode_paths") + sys.path
 EOF
+
 endif
 
 
@@ -53,6 +57,7 @@ endif
 if !pymode#Default("g:pymode_lint", 1) || g:pymode_lint
 
     let g:qf_list = []
+    let g:pymode_lint_buffer = 0
 
     " OPTION: g:pymode_lint_write -- bool. Check code every save.
     call pymode#Default("g:pymode_lint_write", 1)
@@ -94,8 +99,12 @@ if !pymode#Default("g:pymode_lint", 1) || g:pymode_lint
     " OPTION: g:pymode_lint_mccabe_complexity -- int. Maximum allowed complexity
     call pymode#Default("g:pymode_lint_mccabe_complexity", 8)
 
+    " OPTION: g:pymode_lint_signs_always_visible -- bool. Always show the
+    " errors ruller, even if there's no errors.
+    call pymode#Default("g:pymode_lint_signs_always_visible", 0)
+
     " OPTION: g:pymode_lint_signs -- bool. Place error signs
-    if !pymode#Default("g:pymode_lint_signs", 1) || g:pymode_lint_signs
+    if (!pymode#Default("g:pymode_lint_signs", 1) || g:pymode_lint_signs) && has('signs')
 
         " DESC: Signs definition
         sign define W text=WW texthl=Todo
@@ -104,6 +113,12 @@ if !pymode#Default("g:pymode_lint", 1) || g:pymode_lint
         sign define E text=EE texthl=Error
         sign define I text=II texthl=Info
 
+        if !pymode#Default("g:pymode_lint_signs_always_visible", 0) || g:pymode_lint_signs_always_visible
+            " Show the sign's ruller if asked for, even it there's no error to show
+            sign define __dummy__
+            autocmd BufRead,BufNew * call RopeShowSignsRulerIfNeeded()
+        endif
+
     endif
 
     " DESC: Set default pylint configuration
@@ -111,7 +126,9 @@ if !pymode#Default("g:pymode_lint", 1) || g:pymode_lint
         let g:pymode_lint_config = expand("<sfile>:p:h:h") . "/pylint.ini"
     endif
 
-    py from pymode import check_file
+    py from pymode import lint, queue, auto
+
+    au VimLeavePre * py queue.stop_queue()
 
 endif
 
@@ -168,8 +185,16 @@ endif
 
 if !pymode#Default("g:pymode_rope", 1) || g:pymode_rope
 
-    " OPTION: g:pymode_rope_auto_project -- bool. Auto open ropeproject
+    " OPTION: g:pymode_rope_auto_project -- bool. Auto create ropeproject
     call pymode#Default("g:pymode_rope_auto_project", 1)
+
+    " OPTION: g:pymode_rope_auto_project_open -- bool.
+    " Auto open existing projects, ie, if the current directory has a
+    " `.ropeproject` subdirectory.
+    call pymode#Default("g:pymode_rope_auto_project_open", 1)
+
+    " OPTION: g:pymode_rope_auto_session_manage -- bool
+    call pymode#Default("g:pymode_rope_auto_session_manage", 0)
 
     " OPTION: g:pymode_rope_enable_autoimport -- bool. Enable autoimport
     call pymode#Default("g:pymode_rope_enable_autoimport", 1)
@@ -204,6 +229,9 @@ if !pymode#Default("g:pymode_rope", 1) || g:pymode_rope
     " OPTION: g:pymode_rope_short_prefix -- string.
     call pymode#Default("g:pymode_rope_short_prefix", "<C-c>")
 
+    " OPTION: g:pymode_rope_map_space -- string.
+    call pymode#Default("g:pymode_rope_map_space", 1)
+
     " OPTION: g:pymode_rope_vim_completion -- bool.
     call pymode#Default("g:pymode_rope_vim_completion", 1)
 
@@ -224,6 +252,15 @@ if !pymode#Default("g:pymode_rope", 1) || g:pymode_rope
         return ""
     endfunction "}}}
 
+    fun! RopeOpenExistingProject() "{{{
+        if isdirectory(getcwd() . '/.ropeproject')
+            " In order to pass it the quiet kwarg I need to open the project
+            " using python and not vim, which should be no major issue
+            py ropevim._interface.open_project(quiet=True)
+            return ""
+        endif
+    endfunction "}}}
+
     fun! RopeLuckyAssistInsertMode() "{{{
         call RopeLuckyAssist()
         return ""
@@ -238,6 +275,13 @@ if !pymode#Default("g:pymode_rope", 1) || g:pymode_rope
             return g:pythoncomplete_completions
         endif
     endfunction "}}}
+
+    fun! RopeShowSignsRulerIfNeeded() "{{{
+        if &ft == 'python'
+            execute printf('silent! sign place 1 line=1 name=__dummy__ file=%s', expand("%:p"))
+        endif
+     endfunction "}}}
+
 
     " Rope menu
     menu <silent> Rope.Autoimport :RopeAutoImport<CR>
@@ -260,6 +304,15 @@ if !pymode#Default("g:pymode_rope", 1) || g:pymode_rope
     menu <silent> Rope.Undo :RopeUndo<CR>
     menu <silent> Rope.UseFunction :RopeUseFunction<CR>
 
+    if !pymode#Default("g:pymode_rope_auto_project_open", 1) || g:pymode_rope_auto_project_open
+        call RopeOpenExistingProject()
+    endif
+
+     if !pymode#Default("g:pymode_rope_auto_session_manage", 0) || g:pymode_rope_auto_session_manage
+        autocmd VimLeave * call RopeSaveSession()
+        autocmd VimEnter * call RopeRestoreSession()
+     endif
+
 endif
 
 " }}}
@@ -268,7 +321,19 @@ endif
 " OPTION: g:pymode_folding -- bool. Enable python-mode folding for pyfiles.
 call pymode#Default("g:pymode_folding", 1)
 
+" OPTION: g:pymode_syntax -- bool. Enable python-mode syntax for pyfiles.
+call pymode#Default("g:pymode_syntax", 1)
+
+" OPTION: g:pymode_indent -- bool. Enable/Disable pymode PEP8 indentation
+call pymode#Default("g:pymode_indent", 1)
+
 " OPTION: g:pymode_utils_whitespaces -- bool. Remove unused whitespaces on save
 call pymode#Default("g:pymode_utils_whitespaces", 1)
+
+" OPTION: g:pymode_options -- bool. To set some python options.
+call pymode#Default("g:pymode_options", 1)
+
+" OPTION: g:pymode_updatetime -- int. Set updatetime for async pymode's operation
+call pymode#Default("g:pymode_updatetime", 1000)
 
 " vim: fdm=marker:fdl=0

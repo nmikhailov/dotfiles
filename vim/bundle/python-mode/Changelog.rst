@@ -1,6 +1,45 @@
 Changelog
 =========
 
+## 2012-09-07 0.6.10
+--------------------
+* Dont raise an exception when Logger has no message handler (c) nixon
+* Improve performance of white space removal (c) Dave Smith
+* Improve ropemode support (c) s0undt3ch 
+* Add `g:pymode_updatetime` option
+* Update autopep8 to version 0.8.1
+
+## 2012-09-07 0.6.9
+-------------------
+* Update autopep8
+* Improve pymode#troubleshooting#Test()
+
+## 2012-09-06 0.6.8
+-------------------
+* Add PEP8 indentation ":help 'pymode_indent'" 
+
+## 2012-08-15 0.6.7
+-------------------
+* Fix documentation. Thanks (c) bgrant;
+* Fix pymode "async queue" support.
+
+## 2012-08-02 0.6.6
+-------------------
+* Updated Pep8 to version 1.3.3
+* Updated Pylint to version 0.25.2
+* Fixed virtualenv support for windows users
+* Added pymode modeline ':help PythonModeModeline'
+* Added diagnostic tool ':call pymode#troubleshooting#Test()'
+* Added `PyLintAuto` command ':help PyLintAuto' 
+* Code checking is async operation now
+* More, more fast the pymode folding
+* Repaired execution of python code
+
+## 2012-05-24 0.6.4
+-------------------
+* Add 'pymode_paths' option
+* Rope updated to version 0.9.4
+
 ## 2012-04-18 0.6.3
 -------------------
 * Fix pydocs integration

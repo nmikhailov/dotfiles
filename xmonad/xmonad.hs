@@ -54,7 +54,7 @@ main = do
     bottomStatusBar         <- spawnPipe myBottomStatusBar
     topStatusBar            <- spawnPipe myTopStatusBar
     replace
-    xmonad $ myUrgencyHook $ defaultConfig
+    xmonad $ myUrgencyHook $  ewmh defaultConfig
         { terminal           = "urxvt -e tmux"
         , modMask            = mod4Mask
         , focusFollowsMouse  = True
@@ -82,12 +82,13 @@ startup = do
 
     spawn "pidof udiskie || udiskie"
     spawn "pidof xcompmgr || xcompmgr"
-    spawn "pidof firefox || firefox"
+--    spawn "pidof firefox || firefox"
     spawn "pidof pidgin || pidgin"
-    spawn "pidof deluged || deluged"
+--    spawn "pidof deluged || deluged"
     spawn "pidof keepassx || keepassx"
     spawn "pidof dropboxd || dropboxd"
     spawn "pidof skype || skype"
+    spawn "pidof pulseaudio || start-pulseaudio-x11"
 
 --------------------------------------------------------------------------------------------
 -- APPEARANCE CONFIG                                                                      --

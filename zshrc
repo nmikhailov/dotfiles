@@ -3,21 +3,27 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="wezm"
 source $ZSH/oh-my-zsh.sh
 
-
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/java/bin:/opt/java/db/bin:/opt/java/jre/bin:/usr/bin/core_perl
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/java/bin:/opt/java/db/bin:/opt/java/jre/bin:/usr/bin/core_perl:$PATH
 PATH=/usr/bin/vendor_perl:~/.gem/ruby/1.9.1/bin/:~/.bin/:~/Scripts/:$PATH
+PATH=~/Programming/olymp/codejam/2013/cli/:$PATH
+PATH=/opt/android-sdk/tools/:$PATH
 export EDITOR='vim'
-export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+#export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
+#export _JAVA_OPTIONS="-Dswing.useSystemAASettings=lcd_hrgb -Dswing.aatext=true -D.sw -Dsun.java2d.xrender=true"
+#export _JAVA_OPTIONS="-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.useSystemAASettings=lcd_hrgb -Dswing.aatext=true -D.sw -Dsun.java2d.xrender=true"
+export _JAVA_OPTIONS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp"
 export BROWSER='firefox'
+export $(dbus-launch)
 
 alias cd..='cd ..'
 alias xclip='xclip -selection clipboard'
 alias svim='sudo vim'
-alias systemctl='sudo systemctl'
+#alias systemctl='sudo systemctl'
 alias ssh-term="TERM=linux ssh"
+alias l='ls -la'
 
 # Directory aliases
-hash -d study=~/Study/s07/
+hash -d study=~/Study/s08/
 hash -d repos=~/Repositories/
 
 
@@ -105,3 +111,4 @@ bindkey "\e[3~" delete-char # Del
 #PS1+='$(vi_mode_prompt_info)'
 bindkey '^[[A' up-line-or-search
 bindkey '^[[B' down-line-or-search
+bindkey '^r' history-incremental-pattern-search-backward
