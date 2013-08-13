@@ -82,40 +82,40 @@ bindsym $mod+a focus parent
 bindsym $mod+d focus child
 
 # Workspaces
-set $ws1 1
+set $ws1 1:Term
 set $wsWeb 2:Web
 set $wsDev 3:Dev
-set $wsChat 4:Chat
+set $ws4 4
 set $ws5 5
 set $ws6 6
 set $ws7 7
 set $ws8 8
-set $ws9 9
-set $ws10 10
+set $wsChat 9:Chat
+set $wsMail 10:Mail
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $wsWeb
 bindsym $mod+3 workspace $wsDev
-bindsym $mod+4 workspace $wsChat
+bindsym $mod+4 workspace $ws4
 bindsym $mod+5 workspace $ws5
 bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
+bindsym $mod+9 workspace $wsChat
+bindsym $mod+0 workspace $wsMail
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $wsWeb
 bindsym $mod+Shift+3 move container to workspace $wsDev
-bindsym $mod+Shift+4 move container to workspace $wsChat
+bindsym $mod+Shift+4 move container to workspace $ws4
 bindsym $mod+Shift+5 move container to workspace $ws5
 bindsym $mod+Shift+6 move container to workspace $ws6
 bindsym $mod+Shift+7 move container to workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+9 move container to workspace $wsChat
+bindsym $mod+Shift+0 move container to workspace $wsMail
 
 # reload the configuration file
 bindsym $mod+Shift+r reload
@@ -153,36 +153,15 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    status_command i3status -c ~/.i3/i3status/bottom.conf
+    status_command i3status -c ~/.i3/bar_bottom.conf
     position bottom
     tray_output no
 }
 bar {
-    status_command i3status -c ~/.i3/i3status/top.conf
+    status_command i3pystatus -c ~/.i3/bar_top.py
     position top
     workspace_buttons no
 }
-#bar {
-    ## verbose yes
-    #position bottom
-    #workspace_buttons yes
-    #status_command "bash ~/.i3/i3bar.sh"
-    #colors {
-            #background #3c3c3c
-            #statusline #bbbbbb
-
-            ###. border backgr text
-     #focused_workspace #4c7899 #285577 #ffffff
-     #active_workspace #333333 #5f676a #ffffff
-     #inactive_workspace #333333 #222222 #888888
-     #urgent_workspace #2f343a #900000 #ffffff
-
-    ##focused_workspace #ad7fa8 #75507b #ffffff
-    ##active_workspace #75507b #ad7fa8 #ffffff
-    ##inactive_workspace #3c3c3c #3c3c3c #aaaaaa
-    ##urgent_workspace #df5757 #c22f2f #ffffff
-    #}
-#}
 
 # Custom
 workspace_auto_back_and_forth yes
@@ -216,6 +195,7 @@ bindsym $mod+F1 scratchpad show, move position 0px 0px
 assign [class="Firefox" instance="Navigator"] $wsWeb
 assign [class="Skype"] $wsChat
 assign [class="Pidgin"] $wsChat
+assign [class="Thunderbird"] $wsMail
 for_window [class="^Pidgin$" window_role="^conversation$"] resize grow width 0 px or 30 ppt
 for_window [window_role="sun-awt-X11-XDialogPeer"] floating disable
 
@@ -225,5 +205,6 @@ exec --no-startup-id dropboxd
 exec --no-startup-id pidgin
 exec --no-startup-id xcompmgr  # TODO: replace with compton
 exec --no-startup-id pa-applet  # TODO: replace
-exec --no-startup-id clipit
+exec --no-startup-id clipit # TODO: fix
+exec --no-startup-id thunderbird
 
