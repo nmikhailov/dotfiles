@@ -198,13 +198,12 @@ assign [class="Pidgin"] $wsChat
 assign [class="Thunderbird"] $wsMail
 for_window [class="^Pidgin$" window_role="^conversation$"] resize grow width 0 px or 30 ppt
 for_window [window_role="sun-awt-X11-XDialogPeer"] floating disable
-
+for_window [class="Thunar" title="File Operation Progress"] floating enable
 # Exec on start
 exec --no-startup-id keepassx
 exec --no-startup-id dropboxd
+exec --no-startup-id clipit # TODO: fix
 exec --no-startup-id pidgin
 exec --no-startup-id xcompmgr  # TODO: replace with compton
 exec --no-startup-id pa-applet  # TODO: replace
-exec --no-startup-id clipit # TODO: fix
 exec --no-startup-id thunderbird
-
