@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import i3pystatus
-import i3pystatus.mail.thunderbird
 
 status = i3pystatus.Status(standalone=True)
 
@@ -25,6 +24,5 @@ status.register("mpd",
                     "stop": "◾",
                 },)
 
-status.register("mail", backends=[i3pystatus.mail.thunderbird])
 
 status.run()

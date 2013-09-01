@@ -155,7 +155,7 @@ bindsym $mod+r mode "resize"
 bar {
     status_command i3status -c ~/.i3/bar_bottom.conf
     position bottom
-    tray_output no
+    tray_output none
 }
 bar {
     status_command i3pystatus -c ~/.i3/bar_top.py
@@ -207,3 +207,4 @@ exec --no-startup-id pidgin
 exec --no-startup-id xcompmgr  # TODO: replace with compton
 exec --no-startup-id pa-applet  # TODO: replace
 exec --no-startup-id thunderbird
+exec --no-startup-id nm-applet
