@@ -10,8 +10,8 @@ status.register("clock",
 
 status.register("load")
 
-status.register("temp",
-                format="{temp:.0f}°C",)
+#status.register("temp",
+#                format="{temp:.0f}°C",)
 
 status.register("pulseaudio",
                 format="♪{volume}",)
