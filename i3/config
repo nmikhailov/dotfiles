@@ -189,6 +189,7 @@ bindsym $mod+Control+Down move workspace to output down
 exec --no-startup-id urxvt -name scratchpad -e tmux
 # move this to scratchpad, if active
 for_window [class="URxvt" instance="scratchpad"] move scratchpad
+for_window [title="lab1"] floating enable
 bindsym $mod+F1 scratchpad show, move position 0px 0px
 
 # Filters
@@ -208,3 +209,4 @@ exec --no-startup-id xcompmgr  # TODO: replace with compton
 exec --no-startup-id pa-applet  # TODO: replace
 exec --no-startup-id thunderbird
 exec --no-startup-id nm-applet
+exec --no-startup-id udiskie
