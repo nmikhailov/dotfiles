@@ -6,6 +6,7 @@ source $ZSH/oh-my-zsh.sh
 # Custom RPROMPT
 RPROMPT='%{$fg[green]%}%~ %{$fg[blue]%}@%m%{$reset_color%}'
 
+export XDG_CONFIG_HOME=~/.config/
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/java/bin:/opt/java/db/bin:/opt/java/jre/bin:/usr/bin/core_perl:$PATH
 PATH=/usr/bin/vendor_perl:~/.gem/ruby/1.9.1/bin/:~/.bin/:~/Scripts/:$PATH
 PATH=~/Programming/olymp/codejam/2013/cli/:$PATH
