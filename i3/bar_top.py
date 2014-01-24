@@ -16,13 +16,13 @@ status.register("load")
 status.register("pulseaudio",
                 format="♪{volume}",)
 
-status.register("mpd",
-                format="{title}{status}",
-                status={
-                    "pause": "▷",
-                    "play": "▶",
-                    "stop": "◾",
-                },)
+#status.register("mpd",
+                #format="{title}{status}",
+                #status={
+                    #"pause": "▷",
+                    #"play": "▶",
+                    #"stop": "◾",
+                #},)
 
 
 status.run()
