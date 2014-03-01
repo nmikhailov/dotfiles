@@ -29,6 +29,7 @@ alias l='ls -la'
 # Directory aliases
 hash -d study=~/Study/s08/
 hash -d repos=~/Repositories/
+hash -d nfs=/media/nfs
 
 
 unsetopt correctall
