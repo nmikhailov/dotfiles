@@ -5,7 +5,6 @@
 
 ! Urxvt
 URxvt.buffered: true
-URxvt.cursorColor: #5E468C
 URxvt.cursorBlink: false
 URxvt.geometry: 80x22
 URxvt.transparent: 0
@@ -37,7 +36,8 @@ URxvt.font:xft:dejavu sans mono:medium:size=10.5
 URxvt.boldFont:xft:dejavu sans mono:medium:size=10.5
 
 ! -- Colours -- !
-#include "/home/nsl/.colours/dark"
+!#include "/home/nsl/.colours/dark"
+#include "/home/nsl/.colours/light"
 
 ! --  Extensions -- !
 URxvt.perl-ext:
@@ -45,20 +45,3 @@ URxvt.perl-ext-common:
 
 URxvt.iso14755_52: false
 URxvt.iso14755: false
-
-! -- Xterm settings -- !
-xterm*toolBar: false
-xterm*scrollBar: false
-xterm*rightScrollBar: false
-xterm*background: #1A1A1A
-xterm*foreground: #A9A9A9
-xterm*font:-*-terminus-medium-*-*-*-16-*-*-*-*-*-iso8859-*
-xterm*geometry: 120x28 
-
-! -- Dzen settings -- !
-dzen2.font: droid sans mono slashed:medium:size=10
-dzen2.foreground: #899CA1
-dzen2.background: #121212
-URxvt.colorIT:      #87af5f
-URxvt.colorBD:      #d7d7d7
-URxvt.colorUL:      #87afd7
