@@ -39,11 +39,11 @@
 !Gutterslob - aikofog
 !*background:  #FEF9EC
 *background: #f5f7fa
-*foreground:  #6D727E
+*foreground:  #101010
 
-*colorBD:     #3E424D
-*colorIT:     #3E424D
-*colorUL:     #3E424D
+*colorBD:     #E75C58
+*colorIT:     #E75C58
+*colorUL:     #E75C58
 
 *cursorColor: #007693
 
