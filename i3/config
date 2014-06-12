@@ -25,7 +25,7 @@ font xft:terminus 9
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+shift+Return exec urxvt -e tmux
+bindsym $mod+shift+Return exec st -e tmux
 
 # kill focused window
 bindsym $mod+c kill
