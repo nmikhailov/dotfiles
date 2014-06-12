@@ -15,7 +15,7 @@ export EDITOR='vim'
 #export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 #export _JAVA_OPTIONS="-Dswing.useSystemAASettings=lcd_hrgb -Dswing.aatext=true -D.sw -Dsun.java2d.xrender=true"
 #export _JAVA_OPTIONS="-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.useSystemAASettings=lcd_hrgb -Dswing.aatext=true -D.sw -Dsun.java2d.xrender=true"
-export _JAVA_OPTIONS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp"
+export _JAVA_OPTIONS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export BROWSER='firefox'
 export $(dbus-launch)
 
