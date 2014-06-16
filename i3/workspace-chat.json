@@ -1,0 +1,80 @@
+// vim:ts=4:sw=4:et
+{
+    // List containers
+    "layout": "stacked",
+    "percent": 0.25,
+    "type": "con",
+    "nodes": [
+        {
+            "name": "Skype - Work",
+            "swallows": [
+               {
+                  "class": "^Skype$",
+                  "instance": "^skype$",
+                  "title": "^m[a-zA-Z_]+\\ \\-\\ Skype™$"
+               }
+            ]
+        },
+        {
+            "name": "Skype - Personal",
+            "swallows": [
+               {
+                  "class": "^Skype$",
+                  "instance": "^skype$",
+                  "title": "^n[a-zA-Z.]+\\ \\-\\ Skype™$"
+               }
+            ]
+        },
+        {
+            "name": "Pidgin list",
+            "swallows": [
+               {
+                 "class": "^Pidgin$",
+                 "instance": "^Pidgin$",
+                  "window_role": "^buddy_list$"
+               }
+            ]
+        }
+    ]
+}
+
+{
+    // Chat windows
+    "layout": "stacked",
+    "percent": 0.75,
+    "type": "con",
+    "nodes": [
+        {
+            "name": "Skype Work Chat",
+            "swallows": [
+               {
+                  "class": "^Skype$",
+                  "instance": "^skype$",
+                  "window_role": "^ConversationsWindow$"
+               }
+            ]
+        },
+        {
+            "name": "Skype Personal Chat",
+            "swallows": [
+               {
+                  "class": "^Skype$",
+                  "instance": "^skype$",
+                  "window_role": "^ConversationsWindow$"
+               }
+            ]
+        },
+        {
+            "name": "Pidgin chat",
+            "swallows": [
+               {
+                  "class": "^Pidgin$",
+                  "instance": "^Pidgin$",
+                  "window_role": "^conversation$"
+               }
+            ]
+        }
+    ]
+}
+
+

@@ -198,6 +198,10 @@ assign [class="Thunderbird"] $wsMail
 for_window [class="^Pidgin$" window_role="^conversation$"] resize grow width 0 px or 30 ppt
 for_window [window_role="sun-awt-X11-XDialogPeer"] floating disable
 for_window [class="Thunar" title="File Operation Progress"] floating enable
+
+# Assgin templates
+exec --no-startup-id "i3-msg 'workspace $wsChat; append_layout /home/nsl/.i3/workspace-chat.json'"
+
 # Exec on start
 exec --no-startup-id keepassx
 exec --no-startup-id dropboxd
