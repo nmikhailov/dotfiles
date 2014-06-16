@@ -199,8 +199,8 @@ for_window [class="^Pidgin$" window_role="^conversation$"] resize grow width 0 p
 for_window [window_role="sun-awt-X11-XDialogPeer"] floating disable
 for_window [class="Thunar" title="File Operation Progress"] floating enable
 
-# Assgin templates
-exec --no-startup-id "i3-msg 'workspace $wsChat; append_layout /home/nsl/.i3/workspace-chat.json'"
+# Assgin workspace templates
+exec --no-startup-id "$HOME/.i3/setup-workspaces.sh $wsChat $wsWeb"
 
 # Exec on start
 exec --no-startup-id keepassx
