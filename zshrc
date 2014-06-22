@@ -112,8 +112,13 @@ bindkey "^[[1;5D" backward-word
 bindkey "^[[1;5C" forward-word
 bindkey "\e[3~" delete-char # Del
 
-[ -n "$TMUX" ] && export TERM='screen-256color'
 #PS1+='$(vi_mode_prompt_info)'
 bindkey '^[[A' up-line-or-search
 bindkey '^[[B' down-line-or-search
 bindkey '^r' history-incremental-pattern-search-backward
+
+# St DEL woraround
+function zle-line-init () { echoti smkx }
+function zle-line-finish () { echoti rmkx }
+zle -N zle-line-init
+zle -N zle-line-finish
