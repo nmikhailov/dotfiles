@@ -200,7 +200,7 @@ for_window [window_role="sun-awt-X11-XDialogPeer"] floating disable
 for_window [class="Thunar" title="File Operation Progress"] floating enable
 
 # Assgin workspace templates
-exec --no-startup-id "$HOME/.i3/setup-workspaces.sh $wsChat $wsWeb"
+exec --no-startup-id "$HOME/.i3/setup-workspaces.sh $wsChat"
 
 # Exec on start
 exec --no-startup-id keepassx
