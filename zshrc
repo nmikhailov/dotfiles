@@ -116,6 +116,8 @@ bindkey "\e[3~" delete-char # Del
 bindkey '^[[A' up-line-or-search
 bindkey '^[[B' down-line-or-search
 bindkey '^r' history-incremental-pattern-search-backward
+bindkey '^[OA' up-line-or-search
+bindkey '^[OB' down-line-or-search
 
 # St DEL woraround
 function zle-line-init () { echoti smkx }
