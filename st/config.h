@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Liberation Mono:pixelsize=14:antialias=false:autohint=false";
+static char font[] = "Liberation Mono:pixelsize=14:antialias=true:autohint=false";
 static int borderpx = 2;
 static char shell[] = "/bin/sh";
 
