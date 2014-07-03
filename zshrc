@@ -11,6 +11,7 @@ export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/ja
 PATH=/usr/bin/vendor_perl:~/.gem/ruby/1.9.1/bin/:~/.bin/:~/Scripts/:$PATH
 PATH=~/Programming/olymp/codejam/2013/cli/:$PATH
 PATH=/opt/android-sdk/tools/:$PATH
+PATH=~/.cabal/bin:$PATH
 export EDITOR='vim'
 #export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 #export _JAVA_OPTIONS="-Dswing.useSystemAASettings=lcd_hrgb -Dswing.aatext=true -D.sw -Dsun.java2d.xrender=true"
