@@ -69,6 +69,8 @@ eval $(dircolors -b ~/.dir_colors)
 alias grep='grep --color=always'
 export GREP_COLOR="1;33"
 
+bindkey "jj" vi-cmd-mode
+
 ## linux console colors (jwr dark) ###
 
 if [ "$TERM" = "linux" ]; then
