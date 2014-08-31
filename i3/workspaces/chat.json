@@ -11,7 +11,7 @@
                {
                   "class": "^Skype$",
                   "instance": "^skype$",
-                  "title": "^m[a-zA-Z_]+\\ \\-\\ Skype™$"
+                  "title": "^mikhaylov_nikita\\ \\-\\ Skype™$"
                }
             ]
         },
@@ -21,7 +21,7 @@
                {
                   "class": "^Skype$",
                   "instance": "^skype$",
-                  "title": "^n[a-zA-Z.]+\\ \\-\\ Skype™$"
+                  "title": "^ns\\.mikhailov\\ \\-\\ Skype™$"
                }
             ]
         },
@@ -31,7 +31,7 @@
                {
                  "class": "^Pidgin$",
                  "instance": "^Pidgin$",
-                  "window_role": "^buddy_list$"
+                 "window_role": "^buddy_list$"
                }
             ]
         }

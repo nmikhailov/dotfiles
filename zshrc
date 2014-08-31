@@ -127,3 +127,10 @@ function zle-line-init () { echoti smkx }
 function zle-line-finish () { echoti rmkx }
 zle -N zle-line-init
 zle -N zle-line-finish
+
+# added by travis gem
+[ -f /home/nsl/.travis/travis.sh ] && source /home/nsl/.travis/travis.sh
+
+# Envoy
+envoy -t ssh-agent
+source <(envoy -p)
