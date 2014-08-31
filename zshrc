@@ -9,13 +9,9 @@ RPROMPT='%{$fg[green]%}%~ %{$fg[blue]%}@%m%{$reset_color%}'
 export XDG_CONFIG_HOME=~/.config/
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/java/bin:/opt/java/db/bin:/opt/java/jre/bin:/usr/bin/core_perl:$PATH
 PATH=/usr/bin/vendor_perl:~/.gem/ruby/2.1.0/bin/:~/.bin/:~/Scripts/:$PATH
-PATH=~/Programming/olymp/codejam/2013/cli/:$PATH
 PATH=/opt/android-sdk/tools/:$PATH
 PATH=~/.cabal/bin:$PATH
 export EDITOR='vim'
-#export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-#export _JAVA_OPTIONS="-Dswing.useSystemAASettings=lcd_hrgb -Dswing.aatext=true -D.sw -Dsun.java2d.xrender=true"
-#export _JAVA_OPTIONS="-Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.useSystemAASettings=lcd_hrgb -Dswing.aatext=true -D.sw -Dsun.java2d.xrender=true"
 export _JAVA_OPTIONS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export BROWSER='firefox'
 export $(dbus-launch)
