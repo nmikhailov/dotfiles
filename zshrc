@@ -62,6 +62,8 @@ cdtmp() {
 
 # colour coreutils
 eval $(dircolors -b ~/.dir_colors)
+# Woraround for zsh completion ls color sourcing
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 alias grep='grep --color=always'
 export GREP_COLOR="1;33"
 
