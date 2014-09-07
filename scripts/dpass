@@ -20,5 +20,9 @@ password=$(printf '%s\n' "${password_files[@]}" | dmenu "$@")
 if [[ $typeit -eq 0 ]]; then
 	pass show -c "$password" 2>/dev/null
 else
-	xdotool - <<<"type --clearmodifiers -- $(pass show "$password" | head -n 1)"
+    login=$(pass show "$password" | grep --color=none -i "username:" | sed "s/username: //")
+    pass=$(pass show "$password" | head -n 1)
+	xdotool - <<<"type --clearmodifiers -- $login"
+	xdotool key Tab
+	xdotool - <<<"type --clearmodifiers -- $pass"
 fi
