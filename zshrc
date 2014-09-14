@@ -132,3 +132,6 @@ zle -N zle-line-finish
 # Envoy
 envoy -t ssh-agent
 source <(envoy -p)
+
+# Fix weird ^M glitch
+stty icrnl
