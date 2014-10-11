@@ -1,0 +1,4 @@
+#!/bin/sh
+
+tmux new -s dmenu_output -d 2> /dev/null
+dmenu_path | dmenu | xargs -i tmux neww -t dmenu_output: "~/.bin/wait_for {}"

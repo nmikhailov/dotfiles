@@ -1,0 +1,14 @@
+#!/bin/sh
+
+$@
+
+for (( i=30; i>0; i--)); do
+    printf "\rExiting in $i seconds.  Hit any key to start shell. "
+    read -s -n 1 -t 1 key
+    if [ $? -eq 0 ]
+    then
+        echo "Starting $SHELL"
+        $SHELL
+        exit
+    fi
+done
