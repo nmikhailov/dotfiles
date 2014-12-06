@@ -1,0 +1,20 @@
+# although called exclude, this file is actually a globbing file list
+# duplicity accepts some globbing patterns, even including ones here
+# here is an example, this incl. only 'dir/bar' except it's subfolder 'foo'
+# - dir/bar/foo
+# + dir/bar
+# - **
+# for more details see duplicity manpage, section File Selection
+# http://duplicity.nongnu.org/duplicity.1.html#sect9
+#
+
++ /home/nsl/Documents
++ /home/nsl/Downloads
++ /home/nsl/Dropbox
++ /home/nsl/Programming
++ /home/nsl/Repositories
++ /home/nsl/Scripts
++ /home/nsl/Study
++ /home/nsl/Sync
+- **
+
