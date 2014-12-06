@@ -64,7 +64,8 @@ cdtmp() {
 eval $(dircolors -b ~/.dir_colors)
 # Woraround for zsh completion ls color sourcing
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-alias grep='grep --color=always'
+unset GREP_OPTIONS
+alias grep='grep --color=auto --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn'
 export GREP_COLOR="1;33"
 
 bindkey "jj" vi-cmd-mode
