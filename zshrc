@@ -136,3 +136,6 @@ source <(envoy -p)
 
 # Fix weird ^M glitch
 stty icrnl
+
+# aliases
+alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
