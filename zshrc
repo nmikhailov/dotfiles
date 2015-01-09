@@ -139,3 +139,5 @@ stty icrnl
 
 # aliases
 alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
+
+alias get_direct_network_shell="sudo ip netns exec direct sudo -u nsl -E -s PULSE_SERVER=10.0.0.1 zsh"
