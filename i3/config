@@ -164,7 +164,7 @@ bar {
 workspace_auto_back_and_forth yes
 
 # Custom hotkeys
-bindsym $mod+Shift+p exec firefox -private-window
+bindsym $mod+Shift+p exec chromium --incognito 
 bindsym $mod+v exec ~/Scripts/dpass --type
 bindsym $mod+Shift+v exec ~/Scripts/dpass
 # More split hotkeys
@@ -199,7 +199,7 @@ for_window [window_role="sun-awt-X11-XDialogPeer"] floating disable
 for_window [class="Thunar" title="File Operation Progress"] floating enable
 
 # Assgin workspace templates
-exec --no-startup-id "$HOME/.i3/setup-workspaces.sh $wsChat $ws1"
+# exec --no-startup-id "$HOME/.i3/setup-workspaces.sh $wsChat $ws1"
 
 # Exec on start
 exec --no-startup-id keepassx
