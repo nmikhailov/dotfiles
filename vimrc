@@ -38,4 +38,16 @@ call vam#ActivateAddons([ 'github:digitaltoad/vim-jade' ], {})
 " TWEAKS
 set nopaste
 imap jj <Esc>
-set number
+set number " line numbers
+
+set undofile
+set undodir=~/.tmp/vimundo/
+if !isdirectory(expand(&undodir))
+    call mkdir(expand(&undodir), "p")
+endif
+
+" indent
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
