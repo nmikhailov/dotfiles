@@ -33,7 +33,9 @@ call vam#ActivateAddons([ 'github:kien/ctrlp.vim' ], {})
 call vam#ActivateAddons([ 'github:ervandew/supertab' ], {})
 call vam#ActivateAddons([ 'github:scrooloose/nerdtree' ], {})
 map <C-n> :NERDTreeToggle<CR>
+call vam#ActivateAddons([ 'github:digitaltoad/vim-jade' ], {})
 
 " TWEAKS
-:set nopaste
-:imap jj <Esc>
+set nopaste
+imap jj <Esc>
+set number
