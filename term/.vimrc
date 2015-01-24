@@ -34,6 +34,7 @@ call vam#ActivateAddons([ 'github:ervandew/supertab' ], {})
 call vam#ActivateAddons([ 'github:scrooloose/nerdtree' ], {})
 map <C-n> :NERDTreeToggle<CR>
 call vam#ActivateAddons([ 'github:digitaltoad/vim-jade' ], {})
+call vam#ActivateAddons([ 'github:plasticboy/vim-markdown' ], {})
 
 " TWEAKS
 set nopaste
