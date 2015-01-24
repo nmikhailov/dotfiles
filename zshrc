@@ -7,13 +7,10 @@ source $ZSH/oh-my-zsh.sh
 RPROMPT='%{$fg[green]%}%~ %{$fg[blue]%}@%m%{$reset_color%}'
 
 export XDG_CONFIG_HOME=~/.config/
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/java/bin:/opt/java/db/bin:/opt/java/jre/bin:/usr/bin/core_perl:$PATH
-PATH=/usr/bin/vendor_perl:~/.gem/ruby/2.1.0/bin/:~/.bin/:~/Scripts/:$PATH
-PATH=/opt/android-sdk/tools/:$PATH
-PATH=~/.cabal/bin:$PATH
+export PATH=~/Scripts/:$PATH
 export EDITOR='vim'
 export _JAVA_OPTIONS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
-export BROWSER='firefox'
+export BROWSER='chromium'
 export $(dbus-launch)
 
 alias cd..='cd ..'
@@ -24,10 +21,8 @@ alias ssh-term="TERM=linux ssh"
 alias l='ls -la'
 
 # Directory aliases
-hash -d study=~/Study/s08/
 hash -d repos=~/Repositories/
 hash -d nfs=/media/nfs
-
 
 unsetopt correctall
 zstyle ':completion:*:processes' command 'ps xua'
@@ -133,9 +128,6 @@ zle -N zle-line-finish
 # Envoy
 envoy -t ssh-agent
 source <(envoy -p)
-
-# Fix weird ^M glitch
-stty icrnl
 
 # aliases
 alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
