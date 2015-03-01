@@ -31,7 +31,7 @@ bindsym $mod+shift+Return exec st -e tmux
 bindsym $mod+c kill
 
 # start dmenu (a program launcher)
-bindsym $mod+p exec ~/Scripts/desktop/dmenu_in_tmux
+bindsym $mod+p exec dmenu_run
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
