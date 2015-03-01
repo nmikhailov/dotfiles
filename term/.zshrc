@@ -1,4 +1,13 @@
-plugins=(archlinux git sprunge tmux vim python yaourt vi-mode)
+plugins=(
+    archlinux
+    git
+    python
+    sprunge
+    tmux
+    vi-mode
+    vim
+    yaourt
+)
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="wezm"
 source $ZSH/oh-my-zsh.sh
@@ -16,7 +25,6 @@ export $(dbus-launch)
 alias cd..='cd ..'
 alias xclip='xclip -selection clipboard'
 alias svim='sudo vim'
-#alias systemctl='sudo systemctl'
 alias ssh-term="TERM=linux ssh"
 alias l='ls -la'
 
