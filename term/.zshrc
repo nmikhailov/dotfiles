@@ -52,16 +52,6 @@ insert_sudo () {
 zle -N insert-sudo insert_sudo
 bindkey "^[s" insert-sudo
 
-# Orphaned packages
-
-orphans() {
-    if [[ ! -n $(pacman -Qdt) ]]; then
-        echo no orphans to remove
-    else
-        sudo pacman -Rs $(pacman -Qdtq)
-    fi
-}
-
 mkcd() {
     mkdir -p $1 && cd $1
 }
