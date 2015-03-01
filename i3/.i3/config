@@ -155,7 +155,7 @@ bar {
     tray_output none
 }
 bar {
-    status_command i3pystatus -c ~/.i3/bar_top.py
+    status_command i3status -c ~/.i3/bar_top.conf
     position top
     workspace_buttons no
 }
