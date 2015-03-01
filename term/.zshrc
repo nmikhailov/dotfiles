@@ -1,8 +1,17 @@
 plugins=(
     archlinux
+    colored-man
+    cp
+    dircycle
+    extract
+    fasd
+    gihub
     git
+    gitignore
+    pass
     python
     sprunge
+    taskwarrior
     tmux
     vi-mode
     vim
