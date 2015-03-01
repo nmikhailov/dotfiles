@@ -14,8 +14,6 @@ plugins=(
     taskwarrior
     tmux
     vi-mode
-    vim
-    yaourt
 )
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="wezm"
