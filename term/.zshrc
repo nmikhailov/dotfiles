@@ -23,11 +23,12 @@ source $ZSH/oh-my-zsh.sh
 RPROMPT='%{$fg[green]%}%~ %{$fg[blue]%}@%m%{$reset_color%}'
 
 export XDG_CONFIG_HOME=~/.config/
-export PATH=~/Scripts/:$PATH
+export PATH=~/Scripts/:~/.gem/ruby/2.2.0/bin:$PATH
 export EDITOR='vim'
 export _JAVA_OPTIONS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=gasp -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel"
 export BROWSER='chromium'
 export $(dbus-launch)
+export TERM="xterm-256color"
 
 alias cd..='cd ..'
 alias xclip='xclip -selection clipboard'
